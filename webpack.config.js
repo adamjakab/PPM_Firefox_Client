@@ -6,7 +6,7 @@ module.exports = {
   mode: 'production',
   target: 'webworker',
   entry: {
-    index: './src/index.ts'
+    index: './src/settings/index.ts'
   },
   module: {
     rules: [

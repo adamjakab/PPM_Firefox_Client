@@ -1,18 +1,12 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
+    "experimentalDecorators": false,
     /* Basic Options */
-    /* https://developers.cloudflare.com/workers/reference/ */
-    /* Cloudflare Workers use the V8 JavaScript engine from Google Chrome. The
-     * Workers runtime is updated at least once a week, to at least the version
-     * that is currently used by Chrome’s stable release. This means you can
-     * safely use latest JavaScript features, with no need for “transpilers”.
-     */
     "target": "ESNext",
     /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */
-    "module": "commonjs",
+    "module": "ESNext",
     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
-    "lib": ["esnext", "webworker"],
+    "lib": ["esnext"],
     /* Specify library files to be included in the compilation. */
     // "allowJs": true,                       /* Allow javascript files to be compiled. */
     // "checkJs": true,                       /* Report errors in .js files. */
@@ -21,7 +15,7 @@
     // "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
     // "sourceMap": true,                     /* Generates corresponding '.map' file. */
     // "outFile": "./",                       /* Concatenate and emit output to single file. */
-    "outDir": "./dist",
+    // "outDir": "./dist",
     /* Redirect output structure to the directory. */
     // "rootDir": "./",                       /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     // "composite": true,                     /* Enable project compilation */
