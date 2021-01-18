@@ -6,7 +6,7 @@ module.exports = {
   target: 'web',
   entry: {
     background: './src/background/index.ts',
-    settings: './src/settings/index.ts',
+    settings: './src/settings/index.tsx',
     popup: './src/popup/index.ts'
   },
   module: {
@@ -19,10 +19,11 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.tsx', '.js']
   },
   output: {
-    path: path.resolve(__dirname, 'build-dev')
+    path: path.resolve(__dirname, 'build-dev'),
+    filename: '[name]/[name].js'
   },
   devtool: 'eval-cheap-source-map'
 }
