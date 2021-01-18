@@ -12,8 +12,8 @@
     "dependency-check": "node_modules/madge/bin/cli.js --circular --ts-config tsconfig.json --exclude \"index\\.ts\" ./src/index.ts",
     "lint": "eslint '{src,test}/**/*.{js,ts}'",
     "lint-fix": "eslint '{src,test}/**/*.{js,ts}' --fix",
-    "build": "webpack --config webpack.config.js --progress # Create minified output",
-    "build-dev": "webpack --config webpack.config.dev.js # Creates readable output"
+    "build": "grunt build-prod # Create minified output",
+    "build-dev": "grunt build-dev # Creates readable output"
   },
   "repository": {
     "type": "git",

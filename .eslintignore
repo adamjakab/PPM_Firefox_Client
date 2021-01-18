@@ -1,2 +1,2 @@
-./dist/
-./worker/
+build/
+build-dev/

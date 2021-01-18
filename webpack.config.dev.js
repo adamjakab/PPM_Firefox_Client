@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
   entry: {
     background: './src/background/index.ts',
     settings: './src/settings/index.ts',
-    popup: './src/popup/index.ts',
+    popup: './src/popup/index.ts'
   },
   module: {
     rules: [
