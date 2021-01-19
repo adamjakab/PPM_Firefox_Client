@@ -7,22 +7,33 @@ module.exports = function (grunt) {
 
   // Default task
   grunt.registerTask('default', [
-    'build-dev'
+    'build_dev'
   ])
 
-  // Build the project optimized for production
-  grunt.registerTask('build-dev',
+  grunt.registerTask('build_dev',
     'Build the development version of the project.',
     function () {
       grunt.task.run('clean:dev')
-      grunt.task.run('copy:dev')
-      grunt.task.run('webpack:dev')
-
-      // grunt.task.run('requirejs:build_background');
-      // grunt.task.run('requirejs:build_popup');
-      // grunt.task.run('replace:build_background');
-      // grunt.task.run('replace:build_popup');
+      grunt.task.run('build_dev.copy_static')
+      grunt.task.run('build_dev.copy_devel')
+      grunt.task.run('build_dev.webpack')
     })
+
+  grunt.registerTask('build_dev.copy_static',
+    'Copy the static files which don\'t change very often.',
+    function () {
+      grunt.task.run('copy:dev_static')
+    })
+
+  grunt.registerTask('build_dev.copy_devel',
+    'Copy the development files which change often.',
+    function () {
+      grunt.task.run('copy:dev_devel')
+    })
+
+  grunt.registerTask('build_dev.webpack', [
+    'webpack:dev'
+  ])
 
   /* ---------------------------------------------- CONFIGURATIONS ------------------------------------------------ */
   // Project configuration.
@@ -33,14 +44,47 @@ module.exports = function (grunt) {
       dev: ['build-dev/*']
     },
     copy: {
-      dev: {
+      /** Copy resources which are not (often) changed during the development process */
+      dev_static: {
         files: [
           {
             expand: true,
-            flatten: true,
             cwd: 'src',
             src: [
-              'manifest.json',
+              'manifest.json'
+            ],
+            dest: 'build-dev'
+          },
+          {
+            expand: true,
+            flatten: false,
+            cwd: 'src',
+            src: [
+              'images/**/*.png',
+              '_locales/**/*.json'
+            ],
+            dest: 'build-dev'
+          },
+          /** Copy from node_modules */
+          {
+            expand: true,
+            flatten: true,
+            cwd: 'node_modules',
+            src: [
+              'bootstrap/dist/css/bootstrap.css',
+              'bootstrap/dist/css/bootstrap-grid.css',
+              'bootstrap/dist/css/bootstrap-reboot.css'
+            ],
+            dest: 'build-dev/css'
+          }
+        ]
+      },
+      dev_devel: {
+        files: [
+          {
+            expand: true,
+            cwd: 'src',
+            src: [
               'background.html',
               'settings.html',
               'popup.html'
@@ -52,9 +96,7 @@ module.exports = function (grunt) {
             flatten: false,
             cwd: 'src',
             src: [
-              'images/**/*.png',
-              'css/**/*.css',
-              '_locales/**/*.json'
+              'css/**/*.css'
             ],
             dest: 'build-dev'
           }
