@@ -6,7 +6,7 @@ module.exports = {
   target: 'web',
   entry: {
     background: './src/background/index.ts',
-    settings: './src/settings/index.tsx',
+    settings: './src/settings/index.ts',
     popup: './src/popup/index.ts'
   },
   module: {

@@ -6,7 +6,9 @@ module.exports = {
   mode: 'production',
   target: 'webworker',
   entry: {
-    index: './src/settings/index.ts'
+    background: './src/background/index.ts',
+    settings: './src/settings/index.ts',
+    popup: './src/popup/index.ts'
   },
   module: {
     rules: [
@@ -18,11 +20,11 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.tsx', '.js']
   },
   output: {
-    filename: 'worker.js',
-    path: path.resolve(__dirname, 'worker')
+    path: path.resolve(__dirname, 'build'),
+    filename: '[name]/[name].js'
   },
   optimization: {
     minimize: true,

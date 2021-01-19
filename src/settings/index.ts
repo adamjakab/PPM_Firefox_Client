@@ -10,4 +10,5 @@ const z = { name: 'yeppa' }
 const a = _.get(z, 'name')
 console.log('Settings: ' + a)
 
-ReactDOM.render(<ReactElement name='PaloBoy' />, document.getElementById('app'))
+const name = 'Jozsi'
+ReactDOM.render(ReactElement({ name: name }), document.getElementById('app'))
