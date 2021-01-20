@@ -20,7 +20,8 @@ const contentSection = new ContentSection(contentProps)
 const contentSectionElement = contentSection.render()
 
 const footerProps = {
-  title: 'Paranoia Password Manager'
+  title: 'Paranoia Password Manager',
+  version: 'v0.0.1'
 }
 const footerSection = new FooterSection(footerProps)
 const footerSectionElement = footerSection.render()
