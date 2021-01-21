@@ -16,6 +16,7 @@ module.exports = function (grunt) {
       grunt.task.run('clean:dev')
       grunt.task.run('build_dev.copy_static')
       grunt.task.run('build_dev.copy_devel')
+      grunt.task.run('build_dev.sass_compile')
       grunt.task.run('build_dev.webpack')
     })
 
@@ -29,6 +30,12 @@ module.exports = function (grunt) {
     'Copy the development files which change often.',
     function () {
       grunt.task.run('copy:dev_devel')
+    })
+
+  grunt.registerTask('build_dev.sass_compile',
+    'Compile the scss files into css.',
+    function () {
+      grunt.task.run('sass:dev')
     })
 
   grunt.registerTask('build_dev.webpack', [
@@ -64,18 +71,6 @@ module.exports = function (grunt) {
               '_locales/**/*.json'
             ],
             dest: 'build-dev'
-          },
-          /** Copy from node_modules */
-          {
-            expand: true,
-            flatten: true,
-            cwd: 'node_modules',
-            src: [
-              'bootstrap/dist/css/bootstrap.css',
-              'bootstrap/dist/css/bootstrap-grid.css',
-              'bootstrap/dist/css/bootstrap-reboot.css'
-            ],
-            dest: 'build-dev/css'
           }
         ]
       },
@@ -90,15 +85,23 @@ module.exports = function (grunt) {
               'popup.html'
             ],
             dest: 'build-dev'
-          },
+          }
+        ]
+      }
+    },
+    sass: {
+      dev: {
+        options: {
+          style: 'expanded',
+          update: true /* only compile changed files */
+        },
+        files: [
           {
             expand: true,
-            flatten: false,
             cwd: 'src',
-            src: [
-              'css/**/*.css'
-            ],
-            dest: 'build-dev'
+            src: ['css/**/*.scss'],
+            dest: 'build-dev',
+            ext: '.css'
           }
         ]
       }
@@ -112,6 +115,7 @@ module.exports = function (grunt) {
   /* ------------------------------------------- PLUGINS ---------------------------------------------------------- */
   grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-contrib-copy')
+  grunt.loadNpmTasks('grunt-contrib-sass')
   grunt.loadNpmTasks('grunt-webpack')
   // grunt.loadNpmTasks('grunt-replace');
   // grunt.loadNpmTasks('grunt-ngmin');

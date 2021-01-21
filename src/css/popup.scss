@@ -3,17 +3,3 @@
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 @import "./_variables";
 
-body {
-    padding-top: 56px;
-}
-
-.settings-main {
-    padding: 3rem 1.5rem;
-    text-align: center;
-}
-
-footer.footer {
-    background: $gray-300;
-    text-align: center;
-    font-size: small;
-}
