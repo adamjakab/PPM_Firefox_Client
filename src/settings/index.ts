@@ -2,32 +2,47 @@
  * SETTINGS ENTRY POINT
  */
 import * as _ from 'lodash'
-import * as ReactDOM from 'react-dom'
-import { NavigationSection } from './components/navigation'
-import { ContentSection } from './components/content'
-import { FooterSection } from './components/footer'
+import { registerApplication, start } from 'single-spa'
+import * as Activity from './activity.functions'
 
-const navProps = {
-  title: 'Paranoia Password Manager'
+const registerApps = () => {
+  registerApplication({
+    name: 'navbar',
+    app: () => import('./app/navbar/lifecycle'),
+    activeWhen: Activity.navbar,
+    customProps: { title: 'PASSWORDS' }
+  })
+
+  registerApplication({
+    name: 'footer',
+    app: () => import('./app/footer/lifecycle'),
+    activeWhen: Activity.footer,
+    customProps: { title: 'Paranoia Password Manager', version: '3.0.1' }
+  })
+
+  registerApplication({
+    name: 'passwords',
+    app: () => import('./app/passwords/lifecycle'),
+    activeWhen: Activity.passwords,
+    customProps: { title: 'PASSWORDS' }
+  })
+
+  registerApplication({
+    name: 'settings',
+    app: () => import('./app/settings/lifecycle'),
+    activeWhen: Activity.settings,
+    customProps: { title: 'Settings' }
+  })
+
+  registerApplication({
+    name: 'info',
+    app: () => import('./app/info/lifecycle'),
+    activeWhen: Activity.info,
+    customProps: { title: 'Add-on Info' }
+  })
 }
-const navSection = new NavigationSection(navProps)
-const navSectionElement = navSection.render()
 
-const contentProps = {
-  title: 'Paranoia Password Manager'
-}
-const contentSection = new ContentSection(contentProps)
-const contentSectionElement = contentSection.render()
-
-const footerProps = {
-  title: 'Paranoia Password Manager',
-  version: 'v0.0.1'
-}
-const footerSection = new FooterSection(footerProps)
-const footerSectionElement = footerSection.render()
-
+registerApps()
 document.addEventListener('DOMContentLoaded', function () {
-  ReactDOM.render(navSectionElement, document.getElementById('navigation'))
-  ReactDOM.render(contentSectionElement, document.getElementById('content'))
-  ReactDOM.render(footerSectionElement, document.getElementById('footer'))
+  start()
 })
