@@ -17,7 +17,7 @@ const registerApps = () => {
     name: 'footer',
     app: () => import('./app/footer/lifecycle'),
     activeWhen: Activity.footer,
-    customProps: { title: 'Paranoia Password Manager', version: '3.0.1' }
+    customProps: { title: 'Paranoia Password Manager', version: 'v0.0.1' }
   })
 
   registerApplication({
