@@ -5,6 +5,10 @@ type componentProps = {
 }
 
 export default class Navbar extends Component < componentProps > {
+  componentDidCatch (error: Error, errorInfo: React.ErrorInfo) {
+    console.error(error)
+  }
+
   render () {
     return <nav className="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <a className="navbar-brand" href="">PPM</a>

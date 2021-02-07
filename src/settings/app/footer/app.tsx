@@ -6,6 +6,10 @@ type componentProps = {
 }
 
 export default class Footer extends Component < componentProps > {
+  componentDidCatch (error: Error, errorInfo: React.ErrorInfo) {
+    console.error(error)
+  }
+
   render () {
     return <footer className="footer">
         <div className="container-fluid">
