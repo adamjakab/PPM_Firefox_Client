@@ -19,6 +19,12 @@
     "browser_style": false,
     "open_in_tab": true
   },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{3f1a7524-8bc7-1b40-b2e7-9d026108db01}",
+      "strict_min_version": "85.0"
+    }
+  },
   "icons": {
     "128": "images/paranoia_128.png",
     "32": "images/paranoia_32.png",
