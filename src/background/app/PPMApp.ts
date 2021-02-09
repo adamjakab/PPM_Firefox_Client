@@ -1,22 +1,41 @@
 import { browser } from 'webextension-polyfill-ts'
+import * as _ from 'lodash'
+import { PasswordCard } from '../../lib/model/password.card'
+import { PasswordList } from '../../lib/model/password.list'
 
 export class PPMApp {
+  private readonly _pwdList: PasswordList
+
+  constructor () {
+    this._pwdList = new PasswordList()
+    this.addRandomPasscards()
+  }
+
   public doSomething (msg:string) {
     console.log('Fico: ' + msg)
   }
 
   public async getPasscards () {
-    return new Promise<any[]>((resolve, reject) => {
-      const _items = [
-        { id: 1, name: 'Reservoir Dogs' },
-        { id: 2, name: 'Airplane' },
-        { id: 3, name: 'Doctor Zhivago' },
-        { id: 4, name: 'Memento' },
-        { id: 5, name: 'Braveheart' },
-        { id: 6, name: 'Beauty and the Beast' },
-        { id: 7, name: 'Seven' }
-      ]
-      resolve(_items)
+    return new Promise<PasswordList>((resolve, reject) => {
+      setTimeout(() => {
+        resolve(this._pwdList)
+      }, 500)
     })
+  }
+
+  protected addRandomPasscards = () => {
+    const pc = new PasswordCard({
+      id: Math.floor(99999 * Math.random()),
+      name: 'n_' + Math.floor(99999 * Math.random()),
+      text: '___',
+      dateCreated: new Date(),
+      dateUpdated: new Date(),
+      identifier: 'i_' + Math.floor(99999 * Math.random())
+    })
+    this._pwdList.addItem(pc)
+
+    if (this._pwdList.getLength() < 10) {
+      setTimeout(this.addRandomPasscards, 1000)
+    }
   }
 }
