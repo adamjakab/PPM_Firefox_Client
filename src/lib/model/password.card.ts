@@ -11,14 +11,14 @@ export class PasswordCard extends Card {
     if (data) {
       this.setText(data.text)
     }
-    this.increaseCounter()
+
+    setInterval(this.increaseCounter, 1000)
   }
 
   protected increaseCounter = () => {
     this._counter++
     this.setText('CNT___' + this._counter)
     // console.log(this._counter)
-    setTimeout(this.increaseCounter, 500 + Math.random() * 500)
   }
 
   public setText (value: string): void {

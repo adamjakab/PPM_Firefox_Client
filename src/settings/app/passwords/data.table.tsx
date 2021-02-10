@@ -1,21 +1,28 @@
 import React, { FC } from 'react'
-import { useDataHook } from 'model-react'
+import { Observer, useDataHook } from 'model-react'
 import { PasswordCard } from '../../../lib/model/password.card'
 import { PasswordList } from '../../../lib/model/password.list'
 
-export const DataTableRow: FC<{passcard:PasswordCard}> = ({ passcard }) => {
-  const [h] = useDataHook()
+const RawDataTableCell: FC<{v:string}> = ({ v }) => {
   return (
-    <tr key={passcard.getId(h)}>
-      <td>
-        {passcard.getId(h)}
-      </td>
-      <td>
-        {passcard.getName(h)}
-      </td>
-      <td>
-        {passcard.getText(h)}
-      </td>
+    <td>{v}</td>
+  )
+}
+
+const DataTableRow: FC<{passcard:PasswordCard}> = ({ passcard }) => {
+  const [h] = useDataHook()
+
+  /*
+  const observer = new Observer(h => passcard.getText(h))
+  observer.listen((value, { exceptions, isLoading }, prevValue) => {
+    console.log('txt change: ' + value)
+  }) */
+
+  return (
+    <tr>
+      <RawDataTableCell v={passcard.getId(h)} />
+      <RawDataTableCell v={passcard.getName(h)} />
+      <RawDataTableCell v={passcard.getText(h)} />
     </tr>
   )
 }
@@ -33,8 +40,8 @@ export const DataTable: FC<{pwdlist:PasswordList}> = ({ pwdlist }) => {
         </tr>
         </thead>
         <tbody>
-        {pwdlist.getItems(h).map(item => (
-          <DataTableRow passcard={item} />
+        {pwdlist.getItems(h).map((item) => (
+          <DataTableRow key={item.getId(h)} passcard={item} />
         ))}
         </tbody>
       </table>

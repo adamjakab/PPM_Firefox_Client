@@ -17,9 +17,10 @@ export class PPMApp {
 
   public async getPasscards () {
     return new Promise<PasswordList>((resolve, reject) => {
+      // resolve(this._pwdList)
       setTimeout(() => {
         resolve(this._pwdList)
-      }, 500)
+      }, 50)
     })
   }
 
@@ -34,7 +35,7 @@ export class PPMApp {
     })
     this._pwdList.addItem(pc)
 
-    if (this._pwdList.getLength() < 10) {
+    if (this._pwdList.getLength() < 3) {
       setTimeout(this.addRandomPasscards, 1000)
     }
   }

@@ -13,7 +13,8 @@ export interface componentProps {
 }
 
 export interface componentState {
-  passwordList: PasswordList | null;
+  passwordList1: any;
+  dataLoaderSource: any;
 }
 
 export default class Passwords extends Component < componentProps > {
@@ -21,8 +22,29 @@ export default class Passwords extends Component < componentProps > {
 
   constructor (props: any) {
     super(props)
+
+    const pwdList1 = new PasswordList()
+    const pc = new PasswordCard({
+      id: 0,
+      name: 'SUPERFICOOOO',
+      text: '___',
+      dateCreated: new Date(),
+      dateUpdated: new Date(),
+      identifier: 'i_x'
+    })
+    pwdList1.addItem(pc)
+
+    /*
+    const pwdList2 = new PasswordList()
+    const myDataLoaderSource = new DataLoader(async () => {
+      const app = await getBackgroundPage()
+      const newPwdList = await app.getPasscards()
+      return newPwdList
+    }, pwdList2)
+    */
     this.state = {
-      passwordList: null
+      passwordList1: pwdList1,
+      dataLoaderSource: null
     }
   }
 
@@ -35,18 +57,13 @@ export default class Passwords extends Component < componentProps > {
   }
 
   render () {
-    const src = new DataLoader(async () => {
-      const app = await getBackgroundPage()
-      return await app.getPasscards()
-    }, new PasswordList())
-
     return <main role="main" className="container-fluid">
             <div className="settings-head">
                 <h1>{this.props.title}</h1>
             </div>
             <div className="settings-main table-responsive">
-              {/* <DataTable pwdlist={this.state.passwordList} /> */}
-              <PasswordDataLoader source={src} />
+              <DataTable pwdlist={this.state.passwordList1} />
+              {/* <PasswordDataLoader source={this.state.dataLoaderSource} /> */}
             </div>
         </main>
   }
