@@ -43,4 +43,11 @@ export class PasswordList {
   public removeItem (item: PasswordCard): boolean {
     return false
   }
+
+  public resetWithPasswordList (lst:PasswordList) {
+    this._items = []
+    _.each(lst.items, pwd => {
+      this._items.push(pwd)
+    })
+  }
 }

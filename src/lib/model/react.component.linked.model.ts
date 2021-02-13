@@ -5,7 +5,7 @@ import { Component } from 'react'
  * Helper class to be able to bind and manually update React components related to this model
  */
 export class ReactComponentLinkedModel {
-  private boundComponents: Component[]
+  private readonly boundComponents: Component[]
 
   constructor () {
     this.boundComponents = []
@@ -26,14 +26,37 @@ export class ReactComponentLinkedModel {
   }
 
   public unregisterReactComponent (component:Component) {
+    console.log('unreg is called')
     _.remove(this.boundComponents, cmp => {
       return cmp === component
     })
   }
 
   public rerenderLinkedComponents () {
+    this.sanitizeBoundComponents()
     _.each(this.boundComponents, (cmp:Component) => {
       cmp.setState({})
     })
+  }
+
+  /**
+   * If the browser window is closed or reloaded, the DOM elements will be dead so must be removed from the list
+   * Ref.: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Dead_object
+   * @todo: if (Components.utils.isDeadWrapper(obj)) {} - would be cleaner
+   *
+   * @private
+   */
+  private sanitizeBoundComponents () {
+    if (!_.isEmpty(this.boundComponents)) {
+      _.remove(this.boundComponents, DOMElement => {
+        let isDead = false
+        try {
+          String(DOMElement)
+        } catch (e) {
+          isDead = true
+        }
+        return isDead
+      })
+    }
   }
 }

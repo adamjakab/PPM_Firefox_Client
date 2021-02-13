@@ -9,8 +9,12 @@ export class PPMApp {
 
   constructor () {
     this._pwdList1 = new PasswordList()
+    this.addRandomPasscards(this._pwdList1)
+
     this._pwdList2 = new PasswordList()
-    this.addRandomPasscards()
+    this.addRandomPasscards(this._pwdList2)
+    this.addRandomPasscards(this._pwdList2)
+    this.addRandomPasscards(this._pwdList2)
   }
 
   public logToConsole (msg:string) {
@@ -26,11 +30,11 @@ export class PPMApp {
       // resolve(this._pwdList)
       setTimeout(() => {
         resolve(this._pwdList2)
-      }, 50)
+      }, 2000)
     })
   }
 
-  protected addRandomPasscards = () => {
+  protected addRandomPasscards = (list:PasswordList) => {
     const pc = new PasswordCard({
       id: Math.floor(99999 * Math.random()),
       name: 'n_' + Math.floor(99999 * Math.random()),
@@ -39,10 +43,6 @@ export class PPMApp {
       dateUpdated: new Date(),
       identifier: 'i_' + Math.floor(99999 * Math.random())
     })
-    this._pwdList1.addItem(pc)
-
-    if (this._pwdList1.getLength() < 10) {
-      setTimeout(this.addRandomPasscards, 1000)
-    }
+    list.addItem(pc)
   }
 }

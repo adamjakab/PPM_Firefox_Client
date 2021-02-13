@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { PasswordTable } from './data.table'
 import { getBackgroundPage } from '../../../lib/util/utils'
 import * as _ from 'lodash'
-import { PasswordCard } from '../../../lib/model/password.card'
 import { PasswordList } from '../../../lib/model/password.list'
 
 export interface componentProps {
@@ -11,7 +10,6 @@ export interface componentProps {
 
 interface componentState {
   passwordList: PasswordList;
-  passwordList2: PasswordList;
 }
 
 export default class PasswordsApp extends Component < componentProps > {
@@ -20,31 +18,22 @@ export default class PasswordsApp extends Component < componentProps > {
   constructor (props: any) {
     super(props)
 
-    const pwdList1 = new PasswordList()
-    const pc = new PasswordCard({
-      id: 0,
-      name: 'SUPERFICOOOO',
-      text: '___',
-      dateCreated: new Date(),
-      dateUpdated: new Date(),
-      identifier: 'i_x'
-    })
-    pwdList1.addItem(pc)
-
-    const pwdList2 = new PasswordList()
     this.state = {
-      passwordList: pwdList1,
-      passwordList2: pwdList2
+      passwordList: new PasswordList()
     }
   }
 
   componentDidMount () {
-    console.log('PasswordsApp did mount.')
     getBackgroundPage().then(bg => {
       bg.logToConsole('got BG')
       const pwl = bg.getPasswordList1()
       console.log('Got new list of passwords: ' + pwl.getLength())
-      this.setState({ passwordList2: pwl })
+      this.state.passwordList.resetWithPasswordList(pwl)
+      this.setState({})
+      bg.getPasswordList2().then(pwl => {
+        this.state.passwordList.resetWithPasswordList(pwl)
+        this.setState({})
+      })
     })
   }
 
@@ -61,10 +50,6 @@ export default class PasswordsApp extends Component < componentProps > {
             <h3>PWL-1</h3>
             <div className="settings-main table-responsive">
               <PasswordTable pwdlist={this.state.passwordList} />
-            </div>
-            <h3>PWL-2</h3>
-            <div className="settings-main table-responsive">
-              <PasswordTable pwdlist={this.state.passwordList2} />
             </div>
         </main>
     )
