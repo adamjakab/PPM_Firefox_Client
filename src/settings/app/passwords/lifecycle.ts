@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import singleSpaReact from 'single-spa-react'
-import App from './app'
+import PasswordsApp from './app'
 
 function domElementGetter () {
   return document.getElementById('content') as any
@@ -10,7 +10,7 @@ function domElementGetter () {
 const reactLifecycles = singleSpaReact({
   React,
   ReactDOM,
-  rootComponent: (App as any),
+  rootComponent: (PasswordsApp as any),
   domElementGetter
 })
 

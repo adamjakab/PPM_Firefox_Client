@@ -1,30 +1,27 @@
-import { Field, IDataHook } from 'model-react'
+import { ReactComponentLinkedModel } from './react.component.linked.model'
 
-export class Card {
-    private _id = new Field('');
+export class Card extends ReactComponentLinkedModel {
+    private _id: string
     private _dateCreated: Date
     private _dateModified: Date
     private _identifier: string
-    private _name = new Field('');
+    private _name: string
 
     protected _type: string
 
     constructor (data?: any) {
+      super()
       if (data) {
-        this.setId(data.id)
+        this._id = data.id
         this._dateCreated = data.dateCreated
         this._dateModified = data.dateModified
         this._identifier = data.identifier
-        this.setName(data.name)
+        this._name = data.name
       }
     }
 
-    public setId (value: string): void {
-      this._id.set(value)
-    }
-
-    public getId (h?: IDataHook): string {
-      return this._id.get(h)
+    get id (): string {
+      return this._id
     }
 
     get dateCreated (): Date {
@@ -39,12 +36,8 @@ export class Card {
       return this._identifier
     }
 
-    public setName (value: string): void {
-      this._name.set(value)
-    }
-
-    public getName (h?: IDataHook): string {
-      return this._name.get(h)
+    get name (): string {
+      return this._name
     }
 
     get type (): string {

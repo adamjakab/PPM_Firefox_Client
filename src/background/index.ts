@@ -20,4 +20,4 @@ export {
   getBackgroundPage
 }
 
-app.doSomething('INIT-1')
+app.logToConsole('Background was inited.')

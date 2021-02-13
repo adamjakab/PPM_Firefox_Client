@@ -1,55 +1,46 @@
 import { PasswordCard } from './password.card'
-import { Field, IDataHook } from 'model-react'
+import * as _ from 'lodash'
 
 export class PasswordList {
-  protected items = new Field([] as PasswordCard[])
+  private _items: PasswordCard[]
 
-  /**
-   * Retrieves all of the items on the todolist
-   * @param hook The data hook
-   * @returns All items
-   */
-  public getItems (hook?: IDataHook): PasswordCard[] {
-    return this.items.get(hook)
+  constructor () {
+    this._items = []
+  }
+
+  get items (): PasswordCard[] {
+    return this._items
   }
 
   public getLength ():number {
-    return this.getItems().length
+    return this._items.length
   }
 
   /**
    * Inserts an item into the todolist
-   * @param item The item to insert
-   * @returns Whether the item was successfully added (doesn't allow duplicate items)
    */
-  public addItem (item: PasswordCard): boolean {
-    const items = this.getItems()
+  public addItem (item: PasswordCard): void {
+    let found = false
+    _.each(this.items, i => {
+      if (i === item) {
+        found = true
+        return false
+      }
+      return true
+    })
 
-    // Make sure the item isn't already present
-    if (items.includes(item)) return false
+    // Add an item
+    if (found) {
+      throw new Error('This item has already been registered!')
+    }
 
-    // Add the item
-    // @todo: I don't like this
-    this.items.set([...items, item])
-    return true
+    this._items.push(item)
   }
 
   /**
-   * Removes an item from the todolist
-   * @param item The item to remove
-   * @returns Whether the item was present and could be removed
+   * @todo: implement me!
    */
   public removeItem (item: PasswordCard): boolean {
-    const items = this.getItems()
-
-    // Get the items with the item removed/
-    const remainingItems = items.filter(i => i !== item)
-
-    // Check if anything was removed
-    if (items.length === remainingItems.length) return false
-
-    // Store the result
-    this.items.set(remainingItems)
-    return true
+    return false
   }
 }

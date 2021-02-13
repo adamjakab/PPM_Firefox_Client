@@ -1,23 +1,20 @@
 import React, { Component } from 'react'
-import PasswordTable from './password.table'
-import { DataTable } from './data.table'
-import { PasswordDataLoader } from './password.data.loader'
+import { PasswordTable } from './data.table'
 import { getBackgroundPage } from '../../../lib/util/utils'
 import * as _ from 'lodash'
 import { PasswordCard } from '../../../lib/model/password.card'
 import { PasswordList } from '../../../lib/model/password.list'
-import { DataLoader, useDataHook } from 'model-react'
 
 export interface componentProps {
   title: string
 }
 
-export interface componentState {
-  passwordList1: any;
-  dataLoaderSource: any;
+interface componentState {
+  passwordList: PasswordList;
+  passwordList2: PasswordList;
 }
 
-export default class Passwords extends Component < componentProps > {
+export default class PasswordsApp extends Component < componentProps > {
   state: componentState
 
   constructor (props: any) {
@@ -34,22 +31,21 @@ export default class Passwords extends Component < componentProps > {
     })
     pwdList1.addItem(pc)
 
-    /*
     const pwdList2 = new PasswordList()
-    const myDataLoaderSource = new DataLoader(async () => {
-      const app = await getBackgroundPage()
-      const newPwdList = await app.getPasscards()
-      return newPwdList
-    }, pwdList2)
-    */
     this.state = {
-      passwordList1: pwdList1,
-      dataLoaderSource: null
+      passwordList: pwdList1,
+      passwordList2: pwdList2
     }
   }
 
   componentDidMount () {
-    console.log('mounted')
+    console.log('PasswordsApp did mount.')
+    getBackgroundPage().then(bg => {
+      bg.logToConsole('got BG')
+      const pwl = bg.getPasswordList1()
+      console.log('Got new list of passwords: ' + pwl.getLength())
+      this.setState({ passwordList2: pwl })
+    })
   }
 
   componentDidCatch (error: Error, errorInfo: React.ErrorInfo) {
@@ -57,14 +53,20 @@ export default class Passwords extends Component < componentProps > {
   }
 
   render () {
-    return <main role="main" className="container-fluid">
+    return (
+        <main role="main" className="container-fluid">
             <div className="settings-head">
                 <h1>{this.props.title}</h1>
             </div>
+            <h3>PWL-1</h3>
             <div className="settings-main table-responsive">
-              <DataTable pwdlist={this.state.passwordList1} />
-              {/* <PasswordDataLoader source={this.state.dataLoaderSource} /> */}
+              <PasswordTable pwdlist={this.state.passwordList} />
+            </div>
+            <h3>PWL-2</h3>
+            <div className="settings-main table-responsive">
+              <PasswordTable pwdlist={this.state.passwordList2} />
             </div>
         </main>
+    )
   }
 }
