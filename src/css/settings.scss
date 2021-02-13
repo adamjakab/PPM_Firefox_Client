@@ -14,6 +14,21 @@ body {
 
 .settings-main {
     text-align: center;
+
+    .password.table {
+        td.nodata {
+            text-align: center;
+        }
+        th.id {
+            width: 1%;
+        }
+        th.name {
+            width: auto;
+        }
+        th.text {
+            width: 15%;
+        }
+    }
 }
 
 footer.footer {

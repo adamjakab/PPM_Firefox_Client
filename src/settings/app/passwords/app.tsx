@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { PasswordTable } from './data.table'
+import { PasswordTable } from './password.table'
 import { getBackgroundPage } from '../../../lib/util/utils'
 import * as _ from 'lodash'
 import { PasswordList } from '../../../lib/model/password.list'
@@ -23,17 +23,17 @@ export default class PasswordsApp extends Component < componentProps > {
     }
   }
 
+  refreshPasswordList = async () => {
+    const bg = await getBackgroundPage()
+    bg.logToConsole('got BG')
+    const pwl = await bg.getPasswordList()
+    this.state.passwordList.resetWithPasswordList(pwl)
+    this.setState({})
+  }
+
   componentDidMount () {
-    getBackgroundPage().then(bg => {
-      bg.logToConsole('got BG')
-      const pwl = bg.getPasswordList1()
-      console.log('Got new list of passwords: ' + pwl.getLength())
-      this.state.passwordList.resetWithPasswordList(pwl)
-      this.setState({})
-      bg.getPasswordList2().then(pwl => {
-        this.state.passwordList.resetWithPasswordList(pwl)
-        this.setState({})
-      })
+    this.refreshPasswordList().then(() => {
+      console.log('Password list refreshed')
     })
   }
 
@@ -47,9 +47,8 @@ export default class PasswordsApp extends Component < componentProps > {
             <div className="settings-head">
                 <h1>{this.props.title}</h1>
             </div>
-            <h3>PWL-1</h3>
             <div className="settings-main table-responsive">
-              <PasswordTable pwdlist={this.state.passwordList} />
+              <PasswordTable pwdlist={this.state.passwordList} refresh={this.refreshPasswordList}/>
             </div>
         </main>
     )

@@ -4,33 +4,24 @@ import { PasswordCard } from '../../lib/model/password.card'
 import { PasswordList } from '../../lib/model/password.list'
 
 export class PPMApp {
-  private readonly _pwdList1: PasswordList
-  private readonly _pwdList2: PasswordList
+  private readonly _pwdList: PasswordList
 
   constructor () {
-    this._pwdList1 = new PasswordList()
-    this.addRandomPasscards(this._pwdList1)
-
-    this._pwdList2 = new PasswordList()
-    this.addRandomPasscards(this._pwdList2)
-    this.addRandomPasscards(this._pwdList2)
-    this.addRandomPasscards(this._pwdList2)
+    this._pwdList = new PasswordList()
   }
 
   public logToConsole (msg:string) {
     console.log(': ' + msg)
   }
 
-  public getPasswordList1 () {
-    return this._pwdList1
-  }
-
-  public async getPasswordList2 () {
+  public async getPasswordList () {
     return new Promise<PasswordList>((resolve, reject) => {
-      // resolve(this._pwdList)
+      _.each(_.range(1, 5), i => {
+        this.addRandomPasscards(this._pwdList)
+      })
       setTimeout(() => {
-        resolve(this._pwdList2)
-      }, 2000)
+        resolve(this._pwdList)
+      }, 50)
     })
   }
 
