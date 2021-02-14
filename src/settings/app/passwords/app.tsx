@@ -1,18 +1,15 @@
 import React, { Component } from 'react'
 import { PasswordTable } from './password.table'
-import { getBackgroundPage } from '../../../lib/util/utils'
-import * as _ from 'lodash'
+import { getPPMApp } from '../../../lib/util/utils'
 import { PasswordList } from '../../../lib/model/password.list'
-
-export interface componentProps {
-  title: string
-}
+import { getTranslatedMessage as t } from '../../../lib/util/I18n'
+// import * as _ from 'lodash'
 
 interface componentState {
-  passwordList: PasswordList;
+  passwordList: PasswordList
 }
 
-export default class PasswordsApp extends Component < componentProps > {
+export default class PasswordsApp extends Component {
   state: componentState
 
   constructor (props: any) {
@@ -24,9 +21,8 @@ export default class PasswordsApp extends Component < componentProps > {
   }
 
   refreshPasswordList = async () => {
-    const bg = await getBackgroundPage()
-    bg.logToConsole('got BG')
-    const pwl = await bg.getPasswordList()
+    const PPMApp = await getPPMApp()
+    const pwl = await PPMApp.getPasswordList()
     this.state.passwordList.resetWithPasswordList(pwl)
     this.setState({})
   }
@@ -45,7 +41,7 @@ export default class PasswordsApp extends Component < componentProps > {
     return (
         <main role="main" className="container-fluid">
             <div className="settings-head">
-                <h1>{this.props.title}</h1>
+                <h1>{t('title_passwords')}</h1>
             </div>
             <div className="settings-main table-responsive">
               <PasswordTable pwdlist={this.state.passwordList} refresh={this.refreshPasswordList}/>

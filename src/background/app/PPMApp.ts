@@ -1,4 +1,3 @@
-import { browser } from 'webextension-polyfill-ts'
 import * as _ from 'lodash'
 import { PasswordCard } from '../../lib/model/password.card'
 import { PasswordList } from '../../lib/model/password.list'
@@ -8,6 +7,10 @@ export class PPMApp {
 
   constructor () {
     this._pwdList = new PasswordList()
+  }
+
+  public run () {
+    this.logToConsole('Running PPMApp...')
   }
 
   public logToConsole (msg:string) {

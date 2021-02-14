@@ -12,7 +12,14 @@ export function getWindow (): any {
 /**
  * Returns the background application instance
  */
-export async function getBackgroundPage (): Promise<PPMApp> {
-  const bgp = await browser.runtime.getBackgroundPage()
-  return _.get(bgp, 'app')
+export async function getBackgroundPage (): Promise<Window> {
+  return await browser.runtime.getBackgroundPage()
+}
+
+/**
+ * Returns the background application instance
+ */
+export async function getPPMApp (): Promise<PPMApp> {
+  const bgp = await getBackgroundPage()
+  return _.get(bgp, 'PPMApp')
 }

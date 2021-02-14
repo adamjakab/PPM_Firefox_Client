@@ -1,5 +1,20 @@
 {
+  "extension_name": {
+    "message": "Paranoia Password Manager"
+  },
+  "extension_name_short": {
+    "message": "PPM"
+  },
   "extension_description": {
     "message": "Password manager for the paranoid with private server storage."
+  },
+  "title_passwords": {
+    "message": "Passwords"
+  },
+  "title_settings": {
+    "message": "Settings"
+  },
+  "title_info": {
+    "message": "Info"
   }
 }

@@ -6,18 +6,21 @@
 import * as _ from 'lodash'
 
 // Lib Utils
-import { getBackgroundPage } from '../lib/util/utils'
+import { getBackgroundPage, getPPMApp } from '../lib/util/utils'
 
-// Application
+// Import the PPMApp application
 import { PPMApp } from './app/PPMApp'
 
+// Create an instance of the PPMApp
 const app = new PPMApp()
-_.set(window, 'app', app)
+
+// Expose PPMApp to the world
+_.set(window, 'PPMApp', app)
 
 // Export all
 export {
-  app,
-  getBackgroundPage
+  app
 }
 
-app.logToConsole('Background was inited.')
+// Run the application
+app.run()

@@ -1,20 +1,17 @@
 import React, { Component } from 'react'
+import { getTranslatedMessage as t } from '../../../lib/util/I18n'
 
-type componentProps = {
-    title: string,
-}
-
-export default class Info extends Component < componentProps > {
+export default class Info extends Component {
   componentDidCatch (error: Error, errorInfo: React.ErrorInfo) {
     console.error(error)
   }
 
   render () {
     return <main role="main" className="container-fluid">
-            <div className="settings-main">
-                <h1>{this.props.title}</h1>
-                <p className="lead">Put some info here...</p>
-            </div>
-        </main>
+      <div className="settings-main">
+        <h1>{t('title_info')}</h1>
+        <p className="lead">Put some info here...</p>
+      </div>
+    </main>
   }
 }

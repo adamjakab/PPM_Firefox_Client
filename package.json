@@ -26,6 +26,7 @@
     "Add-on"
   ],
   "dependencies": {
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "lodash": "^4.17.20",
     "react": "^17.0.1",
