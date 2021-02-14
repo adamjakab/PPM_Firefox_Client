@@ -39,11 +39,11 @@ export default class PasswordsApp extends Component {
 
   render () {
     return (
-        <main role="main" className="container-fluid">
-            <div className="settings-head">
+        <main role="main" className="container-fluid app passwords">
+            <div className="head">
                 <h1>{t('title_passwords')}</h1>
             </div>
-            <div className="settings-main table-responsive">
+            <div className="main table-responsive">
               <PasswordTable pwdlist={this.state.passwordList} refresh={this.refreshPasswordList}/>
             </div>
         </main>

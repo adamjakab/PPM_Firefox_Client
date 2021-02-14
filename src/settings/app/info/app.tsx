@@ -7,9 +7,11 @@ export default class Info extends Component {
   }
 
   render () {
-    return <main role="main" className="container-fluid">
-      <div className="settings-main">
+    return <main role="main" className="container-fluid app info">
+      <div className="head">
         <h1>{t('title_info')}</h1>
+      </div>
+      <div className="main">
         <p className="lead">Put some info here...</p>
       </div>
     </main>

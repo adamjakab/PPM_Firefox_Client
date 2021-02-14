@@ -7,9 +7,11 @@ export default class Settings extends Component {
   }
 
   render () {
-    return <main role="main" className="container-fluid">
-      <div className="settings-main">
+    return <main role="main" className="container-fluid app settings">
+      <div className="head">
         <h1>{t('title_settings')}</h1>
+      </div>
+      <div className="main">
         <p className="lead">Some settings will be here soon...</p>
       </div>
     </main>

@@ -19,7 +19,7 @@ export class PPMApp {
 
   public async getPasswordList () {
     return new Promise<PasswordList>((resolve, reject) => {
-      _.each(_.range(1, 5), i => {
+      _.each(_.range(1, 2), i => {
         this.addRandomPasscards(this._pwdList)
       })
       setTimeout(() => {

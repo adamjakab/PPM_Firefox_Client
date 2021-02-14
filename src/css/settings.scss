@@ -7,32 +7,45 @@ body {
     padding-top: 56px;
 }
 
-.settings-head {
-    padding: 3rem 1.5rem;
-    text-align: center;
+section#navigation
+{
+
 }
 
-.settings-main {
-    text-align: center;
-
-    .password.table {
-        td.nodata {
+section#content
+{
+    main.app{
+        .head {
+            padding: 1rem 1rem;
             text-align: center;
         }
-        th.id {
-            width: 1%;
-        }
-        th.name {
-            width: auto;
-        }
-        th.text {
-            width: 15%;
+
+        .main {
+            text-align: center;
+
+            .password.table {
+                td.nodata {
+                    text-align: center;
+                }
+                th.id {
+                    width: 1%;
+                }
+                th.name {
+                    width: auto;
+                }
+                th.text {
+                    width: 15%;
+                }
+            }
         }
     }
 }
 
-footer.footer {
-    background: $gray-300;
-    text-align: center;
-    font-size: small;
+section#footer
+{
+    footer.footer {
+        background: $gray-300;
+        text-align: center;
+        font-size: small;
+    }
 }
