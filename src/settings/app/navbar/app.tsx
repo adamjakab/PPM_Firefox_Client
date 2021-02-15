@@ -1,11 +1,42 @@
 import React, { Component } from 'react'
 import { getTranslatedMessage as t } from '../../../lib/util/I18n'
+import * as _ from 'lodash'
 
-type componentProps = {
-    title: string,
+interface componentState {
+  locationHash: string
 }
 
-export default class Navbar extends Component < componentProps > {
+export default class Navbar extends Component {
+  state: componentState
+
+  constructor (props:any) {
+    super(props)
+    this.state = {
+      locationHash: location.hash
+    }
+  }
+
+  public applicationHashChange () {
+    this.setState({ locationHash: location.hash })
+    console.log('New Hash: ' + this.state.locationHash)
+  }
+
+  getNavItemClass (href:string) {
+    const classes = ['nav-item']
+    if (href === this.state.locationHash) {
+      classes.push('active')
+    }
+    return classes.join(' ')
+  }
+
+  componentDidMount () {
+    window.addEventListener('hashchange', this.applicationHashChange.bind(this))
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('hashchange', this.applicationHashChange.bind(this))
+  }
+
   componentDidCatch (error: Error, errorInfo: React.ErrorInfo) {
     console.error(error)
   }
@@ -20,13 +51,13 @@ export default class Navbar extends Component < componentProps > {
 
             <div className="collapse navbar-collapse" id="navbarsDefault">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
+                    <li className={this.getNavItemClass('')}>
                         <a className="nav-link" href="#">{t('title_passwords')}</a>
                     </li>
-                    <li className="nav-item">
+                    <li className={this.getNavItemClass('#settings')}>
                         <a className="nav-link" href="#settings">{t('title_settings')}</a>
                     </li>
-                    <li className="nav-item">
+                    <li className={this.getNavItemClass('#info')}>
                         <a className="nav-link" href="#info">{t('title_info')}</a>
                     </li>
                 </ul>

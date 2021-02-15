@@ -11,6 +11,7 @@ export class PPMApp {
 
   public run () {
     this.logToConsole('Running PPMApp...')
+    // window.dispatchEvent(new Event('locationchange'))
   }
 
   public logToConsole (msg:string) {
