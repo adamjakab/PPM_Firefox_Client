@@ -22,7 +22,7 @@ export default class PasswordsApp extends Component {
 
   refreshPasswordList = async () => {
     const PPMApp = await getPPMApp()
-    const pwl = await PPMApp.getPasswordList()
+    const pwl = await PPMApp.dataProvider.getPasswordList()
     this.state.passwordList.resetWithPasswordList(pwl)
     this.setState({})
   }
