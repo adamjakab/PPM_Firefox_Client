@@ -8,12 +8,19 @@ export class DataProvider {
 
   constructor () {
     this._pwdList = new PasswordList()
-    this.generateRandomPasscards(8)
     /*
     setInterval(() => {
       this.generateRandomPasscards(1)
     }, 5000)
      */
+  }
+
+  public initialize () {
+    return new Promise<void>((resolve, reject) => {
+      this.generateRandomPasscards(8)
+      console.log('DataProvider initialized.')
+      resolve()
+    })
   }
 
   public async getPasswordList () {

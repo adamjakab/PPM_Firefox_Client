@@ -5,9 +5,6 @@
 // Utils
 import * as _ from 'lodash'
 
-// Lib Utils
-import { getBackgroundPage, getPPMApp } from '../lib/util/utils'
-
 // Import the PPMApp application
 import { PPMApp } from './app/PPMApp'
 

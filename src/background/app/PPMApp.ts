@@ -15,8 +15,30 @@ export class PPMApp {
   }
 
   public run () {
-    this.logToConsole('Running PPMApp...')
-    // window.dispatchEvent(new Event('locationchange'))
+    this.logToConsole('Initializing PPMApp...')
+    window.addEventListener('PPM', this.PPMCustomEventListener as EventListener, false)
+    this._cryptor.initialize().then(() => {
+      return this._configurationProvider.initialize()
+    }).then(() => {
+      return this._dataProvider.initialize()
+    }).then(() => {
+      this.logToConsole('PPMApp initialized.')
+      window.dispatchEvent(new CustomEvent('PPM',
+        { detail: { type: 'app.state', value: 'initialized' }, bubbles: true, cancelable: true }
+      ))
+    })
+  }
+
+  protected PPMCustomEventListener (e: CustomEvent<{type:string, value:string}>) {
+    if (e && e.type === 'PPM') {
+      switch (e.detail.type) {
+        case 'app.state':
+          console.log('New App state: ', e.detail.value)
+          break
+        default:
+          console.log('Unhandled PPM CustomEvent: ', e)
+      }
+    }
   }
 
   get cryptor (): Cryptor {

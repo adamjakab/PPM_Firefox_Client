@@ -9,10 +9,17 @@ export class ConfigurationProvider {
   private _currentEncryptionScheme: string
   private _currentEncryptionKey: string
 
+  // eslint-disable-next-line no-useless-constructor
   constructor () {
     // this._config = new Configuration()
-    this.ensureAtLeastOneProfile().then(() => {
-      console.log('Profile ensured.')
+  }
+
+  public initialize () {
+    return new Promise<void>((resolve, reject) => {
+      this.ensureAtLeastOneProfile().then(() => {
+        console.log('ConfigurationProvider initialized.')
+        resolve()
+      })
     })
   }
 
@@ -45,7 +52,7 @@ export class ConfigurationProvider {
     return new Promise<void>((resolve, reject) => {
       const storage = this.getStorage()
       const data = _.set({}, profile, value)
-      console.log('Writing data: ' + JSON.stringify(data))
+      // console.log('Writing data: ' + JSON.stringify(data))
       storage.set(data).then(() => {
         if (browser.runtime.lastError) {
           return reject(browser.runtime.lastError)
@@ -59,7 +66,7 @@ export class ConfigurationProvider {
     return new Promise<{[s:string] : any}>((resolve, reject) => {
       const storage = this.getStorage()
       storage.get(profile).then(data => {
-        console.log('Read data from storage: ' + JSON.stringify(data))
+        // console.log('Read data from storage: ' + JSON.stringify(data))
         if (browser.runtime.lastError) {
           return reject(browser.runtime.lastError)
         }
