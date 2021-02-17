@@ -4,6 +4,7 @@ import { DataProvider } from '../data/data.provider'
 import { Cryptor } from '../../lib/cryptor/Cryptor'
 
 export class PPMApp {
+  private readonly ___DO_AUTOLOGIN___ = true
   private readonly _cryptor: Cryptor
   private readonly _configurationProvider: ConfigurationProvider
   private readonly _dataProvider: DataProvider
@@ -26,6 +27,12 @@ export class PPMApp {
       window.dispatchEvent(new CustomEvent('PPM',
         { detail: { type: 'app.state', value: 'initialized' }, bubbles: true, cancelable: true }
       ))
+      if (this.___DO_AUTOLOGIN___) {
+        this._configurationProvider.loadProfile(
+          'DEFAULT', 'Paranoia', 'AesMd5').then(() => {
+          this.logToConsole('PPMApp autologin done.')
+        })
+      }
     })
   }
 
@@ -34,6 +41,9 @@ export class PPMApp {
       switch (e.detail.type) {
         case 'app.state':
           console.log('New App state: ', e.detail.value)
+          break
+        case 'config.state':
+          console.log('New Config state: ', e.detail.value)
           break
         default:
           console.log('Unhandled PPM CustomEvent: ', e)

@@ -1,3 +1,4 @@
+import _ from 'lodash'
 
 const defaultConfiguration = {
   logger: {
@@ -8,8 +9,11 @@ const defaultConfiguration = {
 export class Configuration {
   private readonly _configuration: any
 
-  constructor () {
+  constructor (data?:any) {
     this._configuration = defaultConfiguration
+    if (!_.isUndefined(data) && _.isObject(data)) {
+      _.extend(this._configuration, data)
+    }
   }
 
   public getAll () {

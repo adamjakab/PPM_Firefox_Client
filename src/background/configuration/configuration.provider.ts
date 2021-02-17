@@ -23,6 +23,23 @@ export class ConfigurationProvider {
     })
   }
 
+  public async loadProfile (profileName:string, encryptionKey:string, encryptionSchemeName:string):Promise<void> {
+    const profiles = await this.getAvailableProfileNames()
+    if (!_.includes(profiles, profileName)) {
+      throw new Error('Requested profile(' + profileName + ') is not available. Profiles: ' + JSON.stringify(profiles))
+    }
+    const encryptedProfileData = await this.readFromStorage(profileName)
+    // decrypt here...
+    const decryptedProfileData = encryptedProfileData
+    this._config = new Configuration(decryptedProfileData)
+    this._currentProfileName = profileName
+    this._currentEncryptionScheme = encryptionSchemeName
+    this._currentEncryptionKey = encryptionKey
+    window.dispatchEvent(new CustomEvent('PPM',
+      { detail: { type: 'config.state', value: 'loaded' }, bubbles: true, cancelable: true }
+    ))
+  }
+
   protected async ensureAtLeastOneProfile () {
     return new Promise<void>((resolve, reject) => {
       this.getAvailableProfileNames().then(profiles => {
@@ -63,7 +80,7 @@ export class ConfigurationProvider {
   }
 
   protected async readFromStorage (profile:null | string) {
-    return new Promise<{[s:string] : any}>((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
       const storage = this.getStorage()
       storage.get(profile).then(data => {
         // console.log('Read data from storage: ' + JSON.stringify(data))
@@ -83,6 +100,7 @@ export class ConfigurationProvider {
     return !_.isUndefined(this._config)
   }
 
+  // @todo: divide this into two separate methods a) return _config  b) return config values
   public async getConfiguration (path?:string) {
     return new Promise<any>((resolve, reject) => {
       if (!this.isAvailable()) {
