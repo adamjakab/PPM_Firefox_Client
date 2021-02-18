@@ -1,11 +1,12 @@
 import _ from 'lodash'
+import { getPPMApp } from '../../lib/util/utils'
 
 class Logger {
-  private readonly _doConsoleLogging:boolean
+  private _doConsoleLogging:boolean
 
-  // @todo: set up an event listener to know when ConfigProvider is ready to be queried about real config
   constructor () {
     this._doConsoleLogging = true
+    window.addEventListener('PPM', this.PPMCustomEventListener.bind(this) as EventListener, false)
   }
 
   public log (zone?:string, message?: any, ...optionalParams: any[]) {
@@ -18,6 +19,23 @@ class Logger {
       console.log(prefix + message, ...optionalParams)
     }
   }
+
+  /**
+   * Load the relative configuration as soon it is available by the configurationProvider
+   */
+  protected PPMCustomEventListener (e: CustomEvent<{type:string, value:string}>) {
+    if (e && e.type === 'PPM') {
+      if (e.detail.type === 'config.state' && e.detail.value === 'loaded') {
+        getPPMApp().then((PPMApp) => {
+          return PPMApp.configurationProvider.getConfiguration('logger.do_console_logging')
+        }).then(doConsoleLogging => {
+          this._doConsoleLogging = doConsoleLogging
+          // this.log('LOGGER', 'New Console Logging Config: ' + doConsoleLogging)
+        })
+      }
+    }
+  }
 }
 
+// There will be only one logger instance.
 export default new Logger()

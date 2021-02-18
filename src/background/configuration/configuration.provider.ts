@@ -1,5 +1,5 @@
 import Logger from '../logger/logger'
-import { Configuration } from '../../lib/model/configuration'
+import { Configuration } from './configuration'
 import { browser, Storage } from 'webextension-polyfill-ts'
 import _ from 'lodash'
 
@@ -114,10 +114,11 @@ export class ConfigurationProvider {
       if (_.isUndefined(path) || _.isEmpty(path)) {
         return resolve(this._config)
       }
-      if (!_.has(this._config, path)) {
-        return reject(new Error('Unknown path in Configuration: ' + path))
+      const configValuesObject = this._config.getAll()
+      if (!_.has(configValuesObject, path)) {
+        return reject(new Error('Unknown path in Configuration: ' + path + ' in config: ' + JSON.stringify(configValuesObject)))
       }
-      resolve(_.get(this._config, path))
+      resolve(_.get(configValuesObject, path))
     })
   }
 }
