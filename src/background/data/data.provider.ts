@@ -1,7 +1,12 @@
+import Logger from '../logger/logger'
 import { PasswordList } from '../../lib/model/password.list'
 import { PasswordCard } from '../../lib/model/password.card'
 import { getRandomString } from '../../lib/util/utils'
 import * as _ from 'lodash'
+
+const log = (message?: any, ...optionalParams: any[]) => {
+  Logger.log('BG/DataProvider', message, ...optionalParams)
+}
 
 export class DataProvider {
   private readonly _pwdList: PasswordList
@@ -18,7 +23,7 @@ export class DataProvider {
   public initialize () {
     return new Promise<void>((resolve, reject) => {
       this.generateRandomPasscards(8)
-      console.log('DataProvider initialized.')
+      log('Initialized.')
       resolve()
     })
   }

@@ -1,6 +1,11 @@
+import Logger from '../logger/logger'
 import { Configuration } from '../../lib/model/configuration'
 import { browser, Storage } from 'webextension-polyfill-ts'
 import _ from 'lodash'
+
+const log = (message?: any, ...optionalParams: any[]) => {
+  Logger.log('BG/ConfigProvider', message, ...optionalParams)
+}
 
 export class ConfigurationProvider {
   private _config: Configuration
@@ -17,7 +22,7 @@ export class ConfigurationProvider {
   public initialize () {
     return new Promise<void>((resolve, reject) => {
       this.ensureAtLeastOneProfile().then(() => {
-        console.log('ConfigurationProvider initialized.')
+        log('Initialized.')
         resolve()
       })
     })
@@ -69,7 +74,7 @@ export class ConfigurationProvider {
     return new Promise<void>((resolve, reject) => {
       const storage = this.getStorage()
       const data = _.set({}, profile, value)
-      // console.log('Writing data: ' + JSON.stringify(data))
+      // log('Writing data: ' + JSON.stringify(data))
       storage.set(data).then(() => {
         if (browser.runtime.lastError) {
           return reject(browser.runtime.lastError)
@@ -83,7 +88,7 @@ export class ConfigurationProvider {
     return new Promise<any>((resolve, reject) => {
       const storage = this.getStorage()
       storage.get(profile).then(data => {
-        // console.log('Read data from storage: ' + JSON.stringify(data))
+        // log('Read data from storage: ' + JSON.stringify(data))
         if (browser.runtime.lastError) {
           return reject(browser.runtime.lastError)
         }

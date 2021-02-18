@@ -1,7 +1,12 @@
-import * as _ from 'lodash'
+import Logger from '../logger/logger'
 import { ConfigurationProvider } from '../configuration/configuration.provider'
 import { DataProvider } from '../data/data.provider'
-import { Cryptor } from '../../lib/cryptor/Cryptor'
+import { Cryptor } from '../cryptor/cryptor'
+import * as _ from 'lodash'
+
+const log = (message?: any, ...optionalParams: any[]) => {
+  Logger.log('BG/PPMApp', message, ...optionalParams)
+}
 
 export class PPMApp {
   private readonly ___DO_AUTOLOGIN___ = true
@@ -16,21 +21,22 @@ export class PPMApp {
   }
 
   public run () {
-    this.logToConsole('Initializing PPMApp...')
-    window.addEventListener('PPM', this.PPMCustomEventListener as EventListener, false)
+    log('Initializing...')
+    window.addEventListener('PPM', this.PPMCustomEventListener.bind(this) as EventListener, false)
     this._cryptor.initialize().then(() => {
       return this._configurationProvider.initialize()
     }).then(() => {
       return this._dataProvider.initialize()
     }).then(() => {
-      this.logToConsole('PPMApp initialized.')
+      log('Initialized.')
       window.dispatchEvent(new CustomEvent('PPM',
         { detail: { type: 'app.state', value: 'initialized' }, bubbles: true, cancelable: true }
       ))
       if (this.___DO_AUTOLOGIN___) {
+        log('Executing autologin...')
         this._configurationProvider.loadProfile(
           'DEFAULT', 'Paranoia', 'AesMd5').then(() => {
-          this.logToConsole('PPMApp autologin done.')
+          log('Autologin done.')
         })
       }
     })
@@ -40,13 +46,13 @@ export class PPMApp {
     if (e && e.type === 'PPM') {
       switch (e.detail.type) {
         case 'app.state':
-          console.log('New App state: ', e.detail.value)
+          log('New App state: ' + e.detail.value)
           break
         case 'config.state':
-          console.log('New Config state: ', e.detail.value)
+          log('New Config state: ' + e.detail.value)
           break
         default:
-          console.log('Unhandled PPM CustomEvent: ', e)
+          log('Unhandled PPM CustomEvent: ', e)
       }
     }
   }
@@ -61,9 +67,5 @@ export class PPMApp {
 
   get dataProvider (): DataProvider {
     return this._dataProvider
-  }
-
-  public logToConsole (msg:string) {
-    console.log(': ' + msg)
   }
 }

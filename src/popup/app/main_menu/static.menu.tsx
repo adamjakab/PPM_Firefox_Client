@@ -1,3 +1,4 @@
+import Logger from '../../../background/logger/logger'
 import React, { Component, SyntheticEvent } from 'react'
 import { getTranslatedMessage as t } from '../../../lib/util/I18n'
 import { browser } from 'webextension-polyfill-ts'
@@ -7,7 +8,7 @@ export class StaticMenu extends Component {
   openConfigurationsTab = (e:SyntheticEvent) => {
     e.preventDefault()
     browser.tabs.create({ url: 'settings.html' }).then(() => {
-      console.log('Settings opened')
+      // Logger.log('Settings opened')
       window.close()
       return true
     })
