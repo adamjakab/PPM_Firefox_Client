@@ -1,12 +1,14 @@
 import _ from 'lodash'
 import { getPPMApp } from '../../lib/util/utils'
 
+// @fixme: there is an instance of this call for each entry point in tha application! Unify under PPMApp
 class Logger {
   private _doConsoleLogging:boolean
 
   constructor () {
     this._doConsoleLogging = true
     window.addEventListener('PPM', this.PPMCustomEventListener.bind(this) as EventListener, false)
+    console.log('new logger')
   }
 
   public log (zone?:string, message?: any, ...optionalParams: any[]) {

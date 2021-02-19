@@ -1,26 +1,25 @@
-import React, { Component } from 'react'
+import React, { Component, SyntheticEvent } from 'react'
 import { getTranslatedMessage as t } from '../../../lib/util/I18n'
 import Logger from '../../../background/logger/logger'
 import { Configuration, ConfigurationData } from '../../../background/configuration/configuration'
 import { getPPMApp } from '../../../lib/util/utils'
+import _ from 'lodash'
 
 const log = (message?: any, ...optionalParams: any[]) => {
   Logger.log('ST/Settings', message, ...optionalParams)
 }
 
-interface componentState {
-  configuration: ConfigurationData
-}
-
 export default class Settings extends Component {
-  state: componentState
+  state: ConfigurationData
 
   constructor (props:any) {
     super(props)
 
-    this.state = {
-      configuration: new Configuration().getAll()
-    }
+    const cfg = new Configuration()
+    this.state = cfg.getAll()
+
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount () {
@@ -28,13 +27,38 @@ export default class Settings extends Component {
       return PPMApp.configurationProvider.getConfiguration()
     }).then((config) => {
       const configData = config.getAll()
-      this.setState({ configuration: configData })
-      log('Got config after mount: ' + JSON.stringify(configData))
+      this.setState(config.getAll())
+      log('Initializing with config: ' + JSON.stringify(configData))
     })
   }
 
-  componentDidCatch (error: Error, errorInfo: React.ErrorInfo) {
-    console.error(error)
+  handleChange (event:SyntheticEvent) {
+    const target:any = event.target
+    const stateClone = _.clone(this.state)
+    switch (target.id) {
+      case 'log_to_console':
+        _.set(stateClone, 'logger.do_console_logging', target.checked)
+        this.setState(stateClone)
+        log('SET(' + target.id + '): ', target.checked)
+        break
+      case 'test_element':
+        _.set(stateClone, 'logger.test_element', target.value)
+        this.setState(stateClone)
+        log('SET(' + target.id + '): ', target.value)
+        break
+      default:
+        log('Unhandled change target(' + target.id + '): ', target.value)
+    }
+  }
+
+  async handleSubmit (event:SyntheticEvent) {
+    event.preventDefault()
+    log('Updating configuration with: ', this.state)
+    getPPMApp().then((PPMApp) => {
+      return PPMApp.configurationProvider.resetConfiguration(this.state)
+    }).then(() => {
+      log('Cfg has been reset')
+    })
   }
 
   render () {
@@ -43,8 +67,25 @@ export default class Settings extends Component {
         <h1>{t('title_settings')}</h1>
       </div>
       <div className="main">
-        <p className="lead">Some settings will be here soon...</p>
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-check">
+            <input type="checkbox" checked={this.state.logger.do_console_logging} className="form-check-input"
+                   id="log_to_console" onChange={this.handleChange}/>
+            <label className="form-check-label" htmlFor="log_to_console">Log to console</label>
+          </div>
+          <div className="form-group">
+            <label htmlFor="test_element">Test Element</label>
+            <input type="text" value={this.state.logger.test_element} className="form-control" id="test_element"
+                   aria-describedby="testHelp" placeholder="Write something" onChange={this.handleChange} />
+            <small id="testHelp" className="form-text text-muted">This will become very secret.</small>
+          </div>
+          <button type="submit" className="btn btn-primary mb-2">Save</button>
+        </form>
       </div>
     </main>
+  }
+
+  componentDidCatch (error: Error, errorInfo: React.ErrorInfo) {
+    console.error(error)
   }
 }

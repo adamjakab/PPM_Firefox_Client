@@ -46,6 +46,16 @@ export class ConfigurationProvider {
     ))
   }
 
+  public async resetConfiguration (configData:ConfigurationData) {
+    // encrypt here...
+    const encryptedProfileData = configData
+    await this.writeToStorage(this._currentProfileName, encryptedProfileData)
+    window.dispatchEvent(new CustomEvent('PPM',
+      { detail: { type: 'config.state', value: 'saved' }, bubbles: true, cancelable: true }
+    ))
+    await this.loadProfile(this._currentProfileName, this._currentEncryptionScheme, this._currentEncryptionKey)
+  }
+
   protected async ensureAtLeastOneProfile () {
     return new Promise<void>((resolve, reject) => {
       this.getAvailableProfileNames().then(profiles => {
