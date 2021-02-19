@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import { Component } from 'react'
 
 /**
- * Helper class to be able to bind and manually update React components related to this model
+ * Helper class to be able to bind and programmatically update React components related to this model
  */
 export class ReactComponentLinkedModel {
   private readonly boundComponents: Component[]
@@ -26,13 +26,12 @@ export class ReactComponentLinkedModel {
   }
 
   public unregisterReactComponent (component:Component) {
-    console.log('unreg is called')
     _.remove(this.boundComponents, cmp => {
       return cmp === component
     })
   }
 
-  public rerenderLinkedComponents () {
+  public refreshLinkedComponents () {
     this.sanitizeBoundComponents()
     _.each(this.boundComponents, (cmp:Component) => {
       cmp.setState({})

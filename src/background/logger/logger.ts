@@ -27,10 +27,10 @@ class Logger {
     if (e && e.type === 'PPM') {
       if (e.detail.type === 'config.state' && e.detail.value === 'loaded') {
         getPPMApp().then((PPMApp) => {
-          return PPMApp.configurationProvider.getConfiguration('logger.do_console_logging')
-        }).then(doConsoleLogging => {
-          this._doConsoleLogging = doConsoleLogging
-          // this.log('LOGGER', 'New Console Logging Config: ' + doConsoleLogging)
+          return PPMApp.configurationProvider.getConfiguration()
+        }).then(configuration => {
+          this._doConsoleLogging = configuration.get('logger.do_console_logging')
+          this.log('LOGGER', 'New Console Logging Config: ' + this._doConsoleLogging)
         })
       }
     }

@@ -1,5 +1,5 @@
 import Logger from '../logger/logger'
-import { Configuration } from './configuration'
+import { Configuration, ConfigurationData } from './configuration'
 import { browser, Storage } from 'webextension-polyfill-ts'
 import _ from 'lodash'
 
@@ -33,7 +33,8 @@ export class ConfigurationProvider {
     if (!_.includes(profiles, profileName)) {
       throw new Error('Requested profile(' + profileName + ') is not available. Profiles: ' + JSON.stringify(profiles))
     }
-    const encryptedProfileData = await this.readFromStorage(profileName)
+    const storageData = await this.readFromStorage(profileName)
+    const encryptedProfileData = _.get(storageData, profileName, '')
     // decrypt here...
     const decryptedProfileData = encryptedProfileData
     this._config = new Configuration(decryptedProfileData)
@@ -51,7 +52,7 @@ export class ConfigurationProvider {
         if (!_.isEmpty(profiles)) {
           return resolve()
         }
-        this._currentProfileName = 'DEFAULT'
+        this._currentProfileName = 'DEFAULT2'
         this._currentEncryptionScheme = 'AesMd5'
         this._currentEncryptionKey = 'Paranoia'
         this._config = new Configuration()
@@ -88,7 +89,7 @@ export class ConfigurationProvider {
     return new Promise<any>((resolve, reject) => {
       const storage = this.getStorage()
       storage.get(profile).then(data => {
-        // log('Read data from storage: ' + JSON.stringify(data))
+        // log('Read data from storage(profile=' + profile + '): ' + JSON.stringify(data))
         if (browser.runtime.lastError) {
           return reject(browser.runtime.lastError)
         }
@@ -105,20 +106,12 @@ export class ConfigurationProvider {
     return !_.isUndefined(this._config)
   }
 
-  // @todo: divide this into two separate methods a) return _config  b) return config values
-  public async getConfiguration (path?:string) {
-    return new Promise<any>((resolve, reject) => {
+  public async getConfiguration () {
+    return new Promise<Configuration>((resolve, reject) => {
       if (!this.isAvailable()) {
         return reject(new Error('Configuration is not available'))
       }
-      if (_.isUndefined(path) || _.isEmpty(path)) {
-        return resolve(this._config)
-      }
-      const configValuesObject = this._config.getAll()
-      if (!_.has(configValuesObject, path)) {
-        return reject(new Error('Unknown path in Configuration: ' + path + ' in config: ' + JSON.stringify(configValuesObject)))
-      }
-      resolve(_.get(configValuesObject, path))
+      return resolve(this._config)
     })
   }
 }

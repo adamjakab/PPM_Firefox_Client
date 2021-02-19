@@ -18,7 +18,7 @@ export class PasswordCard extends Card {
     this._counter++
     this._text = 'CNT____' + this._counter
 
-    this.rerenderLinkedComponents()
+    this.refreshLinkedComponents()
   }
 
   get text (): string {
