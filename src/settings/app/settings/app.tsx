@@ -1,13 +1,9 @@
 import React, { Component, SyntheticEvent } from 'react'
 import { getTranslatedMessage as t } from '../../../lib/util/I18n'
-import Logger from '../../../background/logger/logger'
+import { log } from '../../../lib/util/unified.logger'
 import { Configuration, ConfigurationData } from '../../../background/configuration/configuration'
 import { getPPMApp } from '../../../lib/util/utils'
 import _ from 'lodash'
-
-const log = (message?: any, ...optionalParams: any[]) => {
-  Logger.log('ST/Settings', message, ...optionalParams)
-}
 
 export default class Settings extends Component {
   state: ConfigurationData
@@ -57,7 +53,7 @@ export default class Settings extends Component {
     getPPMApp().then((PPMApp) => {
       return PPMApp.configurationProvider.resetConfiguration(this.state)
     }).then(() => {
-      log('Cfg has been reset')
+      log('Configuration has been reset and stored.')
     })
   }
 

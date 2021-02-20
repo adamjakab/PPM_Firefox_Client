@@ -1,10 +1,6 @@
 /* eslint-disable camelcase */
 import _ from 'lodash'
-import Logger from '../logger/logger'
-
-const log = (message?: any, ...optionalParams: any[]) => {
-  Logger.log('BG/Config', message, ...optionalParams)
-}
+import { log } from '../../lib/util/unified.logger'
 
 export interface ConfigurationData {
   logger: {

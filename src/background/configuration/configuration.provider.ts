@@ -1,11 +1,7 @@
-import Logger from '../logger/logger'
+import { log } from '../../lib/util/unified.logger'
 import { Configuration, ConfigurationData } from './configuration'
 import { browser, Storage } from 'webextension-polyfill-ts'
 import _ from 'lodash'
-
-const log = (message?: any, ...optionalParams: any[]) => {
-  Logger.log('BG/ConfigProvider', message, ...optionalParams)
-}
 
 export class ConfigurationProvider {
   private _config: Configuration

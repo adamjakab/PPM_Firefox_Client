@@ -1,20 +1,19 @@
-import Logger from '../logger/logger'
+import { LoggerService } from '../logger/logger.service'
+import { log } from '../../lib/util/unified.logger'
 import { ConfigurationProvider } from '../configuration/configuration.provider'
 import { DataProvider } from '../data/data.provider'
 import { Cryptor } from '../cryptor/cryptor'
 import * as _ from 'lodash'
 
-const log = (message?: any, ...optionalParams: any[]) => {
-  Logger.log('BG/PPMApp', message, ...optionalParams)
-}
-
 export class PPMApp {
   private readonly ___DO_AUTOLOGIN___ = true
+  private readonly _loggerService:LoggerService
   private readonly _cryptor: Cryptor
   private readonly _configurationProvider: ConfigurationProvider
   private readonly _dataProvider: DataProvider
 
   constructor () {
+    this._loggerService = new LoggerService()
     this._cryptor = new Cryptor()
     this._configurationProvider = new ConfigurationProvider()
     this._dataProvider = new DataProvider()
@@ -28,7 +27,7 @@ export class PPMApp {
     }).then(() => {
       return this._dataProvider.initialize()
     }).then(() => {
-      log('Initialized.')
+      log('PPMApp initialized.')
       window.dispatchEvent(new CustomEvent('PPM',
         { detail: { type: 'app.state', value: 'initialized' }, bubbles: true, cancelable: true }
       ))
@@ -52,7 +51,9 @@ export class PPMApp {
           log('New Config state: ' + e.detail.value)
           break
         default:
-          log('Unhandled PPM CustomEvent: ', e)
+          if (e.detail.type !== 'log.message') {
+            log('Unhandled PPM CustomEvent: ', e)
+          }
       }
     }
   }

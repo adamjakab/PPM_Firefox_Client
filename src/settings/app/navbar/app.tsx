@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { getTranslatedMessage as t } from '../../../lib/util/I18n'
-import Logger from '../../../background/logger/logger'
+import { log } from '../../../lib/util/unified.logger'
 import * as _ from 'lodash'
 
 interface componentState {
@@ -19,7 +19,7 @@ export default class Navbar extends Component {
 
   public applicationHashChange () {
     this.setState({ locationHash: location.hash })
-    Logger.log('New Hash: ' + this.state.locationHash)
+    log('New Hash: ' + this.state.locationHash)
   }
 
   getNavItemClasses (href:string) {

@@ -1,8 +1,4 @@
-import Logger from '../logger/logger'
-
-const log = (message?: any, ...optionalParams: any[]) => {
-  Logger.log('BG/Cryptor', message, ...optionalParams)
-}
+import { log } from '../../lib/util/unified.logger'
 
 export class Cryptor {
   _schemes: any[]

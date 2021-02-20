@@ -1,14 +1,10 @@
-import Logger from '../../../background/logger/logger'
+import { log } from '../../../lib/util/unified.logger'
 import React, { Component } from 'react'
 import { PasswordTable } from './password.table'
 import { getPPMApp } from '../../../lib/util/utils'
 import { PasswordList } from '../../../lib/model/password.list'
 import { getTranslatedMessage as t } from '../../../lib/util/I18n'
 // import * as _ from 'lodash'
-
-const log = (message?: any, ...optionalParams: any[]) => {
-  Logger.log('ST/PasswordsApp', message, ...optionalParams)
-}
 
 interface componentState {
   passwordList: PasswordList
