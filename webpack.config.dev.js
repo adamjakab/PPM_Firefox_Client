@@ -14,7 +14,12 @@ module.exports = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: 'ts-loader'
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true
+          }
+        }
       }
     ]
   },
@@ -24,6 +29,10 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build-dev'),
     filename: '[name]/[name].js'
+  },
+  cache: {
+    type: 'filesystem',
+    cacheDirectory: path.resolve(__dirname, '.temp_cache')
   },
   devtool: 'eval-cheap-source-map'
 }

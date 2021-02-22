@@ -20,7 +20,7 @@ export class PPMApp {
   }
 
   public run () {
-    log('Initializing...')
+    log('Initializing.')
     window.addEventListener('PPM', this.PPMCustomEventListener.bind(this) as EventListener, false)
     this._cryptor.initialize().then(() => {
       return this._configurationProvider.initialize()
@@ -32,7 +32,7 @@ export class PPMApp {
         { detail: { type: 'app.state', value: 'initialized' }, bubbles: true, cancelable: true }
       ))
       if (this.___DO_AUTOLOGIN___) {
-        log('Executing autologin...')
+        log('Executing Autologin...')
         this._configurationProvider.loadProfile(
           'DEFAULT', 'Paranoia', 'AesMd5').then(() => {
           log('Autologin done.')
