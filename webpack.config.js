@@ -4,7 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = {
   mode: 'production',
-  target: 'webworker',
+  target: 'web',
   entry: {
     background: './src/background/index.ts',
     settings: './src/settings/index.ts',
@@ -14,8 +14,8 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        use: 'ts-loader'
       }
     ]
   },
@@ -23,7 +23,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js']
   },
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'build-prod'),
     filename: '[name]/[name].js'
   },
   optimization: {

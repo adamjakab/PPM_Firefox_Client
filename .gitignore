@@ -5,6 +5,7 @@ node_modules/
 dist/
 build/
 build-dev/
+build-prod/
 
 # ignore compiled js files in source
 src/**/*.js

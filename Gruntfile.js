@@ -6,30 +6,28 @@ module.exports = function (grunt) {
   /* ---------------------------------------------- TASKS --------------------------------------------------------- */
 
   // Default task
-  grunt.registerTask('default', [
-    'build_dev'
-  ])
+  grunt.registerTask('default', ['build_dev'])
 
+  // Development build
   grunt.registerTask('build_dev',
     'Build the development version of the project.',
     function () {
-      grunt.task.run('clean:dev')
+      grunt.task.run('build_dev.clean_up')
       grunt.task.run('build_dev.copy_static')
-      grunt.task.run('build_dev.copy_devel')
       grunt.task.run('build_dev.sass_compile')
       grunt.task.run('build_dev.webpack')
+    })
+
+  grunt.registerTask('build_dev.clean_up',
+    'Clean up the build-dev folder.',
+    function () {
+      grunt.task.run('clean:dev')
     })
 
   grunt.registerTask('build_dev.copy_static',
     'Copy the static files which don\'t change very often.',
     function () {
       grunt.task.run('copy:dev_static')
-    })
-
-  grunt.registerTask('build_dev.copy_devel',
-    'Copy the development files which change often.',
-    function () {
-      grunt.task.run('copy:dev_devel')
     })
 
   grunt.registerTask('build_dev.sass_compile',
@@ -42,23 +40,59 @@ module.exports = function (grunt) {
     'webpack:dev'
   ])
 
+  // Production build
+  grunt.registerTask('build_prod',
+    'Build the production version of the project.',
+    function () {
+      grunt.task.run('build_prod.clean_up')
+      grunt.task.run('build_prod.copy_static')
+      grunt.task.run('build_prod.sass_compile')
+      grunt.task.run('build_prod.webpack')
+    })
+
+  grunt.registerTask('build_prod.clean_up',
+    'Clean up the build-prod folder.',
+    function () {
+      grunt.task.run('clean:prod')
+    })
+
+  grunt.registerTask('build_prod.copy_static',
+    'Copy the static files which don\'t change very often.',
+    function () {
+      grunt.task.run('copy:prod_static')
+    })
+
+  grunt.registerTask('build_prod.sass_compile',
+    'Compile the scss files into css.',
+    function () {
+      grunt.task.run('sass:prod')
+    })
+
+  grunt.registerTask('build_prod.webpack', [
+    'webpack:prod'
+  ])
+
   /* ---------------------------------------------- CONFIGURATIONS ------------------------------------------------ */
   // Project configuration.
   grunt.initConfig({
     package_json: grunt.file.readJSON('package.json'),
     manifest_json: grunt.file.readJSON('src/manifest.json'),
     clean: {
-      dev: ['build-dev/*']
+      dev: ['build-dev/*'],
+      prod: ['build-prod/*']
     },
     copy: {
-      /** Copy resources which are not (often) changed during the development process */
+      /** DEV: Copy resources which are not (often) changed during the development process */
       dev_static: {
         files: [
           {
             expand: true,
             cwd: 'src',
             src: [
-              'manifest.json'
+              'manifest.json',
+              'background.html',
+              'settings.html',
+              'popup.html'
             ],
             dest: 'build-dev'
           },
@@ -74,17 +108,29 @@ module.exports = function (grunt) {
           }
         ]
       },
-      dev_devel: {
+      /** DEV: Copy resources which are not (often) changed during the development process */
+      prod_static: {
         files: [
           {
             expand: true,
             cwd: 'src',
             src: [
+              'manifest.json',
               'background.html',
               'settings.html',
               'popup.html'
             ],
-            dest: 'build-dev'
+            dest: 'build-prod'
+          },
+          {
+            expand: true,
+            flatten: false,
+            cwd: 'src',
+            src: [
+              'images/**/*.png',
+              '_locales/**/*.json'
+            ],
+            dest: 'build-prod'
           }
         ]
       }
@@ -93,7 +139,7 @@ module.exports = function (grunt) {
       dev: {
         options: {
           style: 'expanded',
-          update: true /* only compile changed files */
+          update: true
         },
         files: [
           {
@@ -101,6 +147,23 @@ module.exports = function (grunt) {
             cwd: 'src',
             src: ['css/**/*.scss'],
             dest: 'build-dev',
+            ext: '.css'
+          }
+        ]
+      },
+      prod: {
+        options: {
+          style: 'compressed',
+          update: false,
+          noCache: true,
+          sourcemap: 'none'
+        },
+        files: [
+          {
+            expand: true,
+            cwd: 'src',
+            src: ['css/**/*.scss'],
+            dest: 'build-prod',
             ext: '.css'
           }
         ]
@@ -118,9 +181,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass')
   grunt.loadNpmTasks('grunt-webpack')
   // grunt.loadNpmTasks('grunt-replace');
-  // grunt.loadNpmTasks('grunt-ngmin');
-  // grunt.loadNpmTasks('grunt-contrib-uglify');/*do we need this?*/
-  // grunt.loadNpmTasks('grunt-contrib-requirejs');
   // grunt.loadNpmTasks('grunt-crx');
 
   /* ----------------------------------------- SUB TASKS ---------------------------------------------------------- */
