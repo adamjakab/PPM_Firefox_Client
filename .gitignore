@@ -2,6 +2,7 @@
 .sass-cache/
 coverage/
 node_modules/
+private/
 dist/
 build/
 build-dev/

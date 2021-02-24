@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const webpackConfigDev = require('./webpack.config.dev.js')
 const webpackConfigProd = require('./webpack.config.js')
+const privateSecrets = require('./private/secrets.json')
 
 module.exports = function (grunt) {
   /* ---------------------------------------------- TASKS --------------------------------------------------------- */
@@ -181,7 +182,4 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass')
   grunt.loadNpmTasks('grunt-webpack')
   // grunt.loadNpmTasks('grunt-replace');
-  // grunt.loadNpmTasks('grunt-crx');
-
-  /* ----------------------------------------- SUB TASKS ---------------------------------------------------------- */
 }
