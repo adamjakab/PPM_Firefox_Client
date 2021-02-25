@@ -173,10 +173,19 @@ module.exports = function (grunt) {
     webpack: {
       dev: webpackConfigDev,
       prod: webpackConfigProd
+    },
+    version: {
+      project: {
+        options: {
+          prefix: '"version": "'
+        },
+        src: ['package.json', 'src/manifest.json']
+      }
     }
   })
 
   /* ------------------------------------------- PLUGINS ---------------------------------------------------------- */
+  grunt.loadNpmTasks('grunt-version')
   grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-sass')
