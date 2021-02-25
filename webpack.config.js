@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
+// const DefinePlugin = require('webpack/lib/DefinePlugin')
 
 module.exports = {
   mode: 'production',
@@ -36,4 +37,14 @@ module.exports = {
     ]
   },
   devtool: false
+  /*
+  node: {
+    global: false
+  },
+  plugins: [
+    new DefinePlugin({
+      global: 'window'
+    })
+  ]
+  */
 }

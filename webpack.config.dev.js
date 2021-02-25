@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
-const DefinePlugin = require('webpack/lib/DefinePlugin')
 
 module.exports = {
   mode: 'development',
@@ -35,17 +34,5 @@ module.exports = {
     type: 'filesystem',
     cacheDirectory: path.resolve(__dirname, '.temp_cache')
   },
-  /*
-  node: {
-    global: false
-  },
-  plugins: [
-    new DefinePlugin({
-      global: 'window'
-    }),
-    new webpack.ProvidePlugin({
-      global: require.resolve('./global.js')
-    })
-  ], */
   devtool: 'eval-cheap-source-map'
 }

@@ -1,5 +1,9 @@
 PPM Firefox Client
 ==================
+Install
+--------
+> npm install --force
+
 
 Bumping up the version
 ----------------------
