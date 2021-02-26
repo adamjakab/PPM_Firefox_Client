@@ -1,5 +1,6 @@
 .idea/
 .sass-cache/
+.cache
 coverage/
 node_modules/
 private/

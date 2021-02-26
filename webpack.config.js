@@ -1,31 +1,14 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
-// const DefinePlugin = require('webpack/lib/DefinePlugin')
+const _ = require('lodash')
+const commonConfig = require('./webpack/webpack.config.common')
 
-module.exports = {
+module.exports = _.extend(_.cloneDeep(commonConfig), {
   mode: 'production',
-  target: 'web',
-  entry: {
-    background: './src/background/index.ts',
-    settings: './src/settings/index.ts',
-    popup: './src/popup/index.ts'
-  },
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        exclude: /node_modules/,
-        use: 'ts-loader'
-      }
-    ]
-  },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js']
-  },
   output: {
     path: path.resolve(__dirname, 'build-prod'),
-    filename: '[name]/[name].js'
+    filename: 'js/[name].js'
   },
   optimization: {
     minimize: true,
@@ -35,16 +18,5 @@ module.exports = {
         extractComments: true
       })
     ]
-  },
-  devtool: false
-  /*
-  node: {
-    global: false
-  },
-  plugins: [
-    new DefinePlugin({
-      global: 'window'
-    })
-  ]
-  */
-}
+  }
+})
