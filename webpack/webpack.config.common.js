@@ -6,9 +6,28 @@ module.exports = {
   mode: 'development',
   target: 'web',
   entry: {
-    background: './src/background/index.ts',
-    settings: './src/settings/index.ts',
-    popup: './src/popup/index.ts'
+    background: {
+      import: './src/background/index.ts',
+      dependOn: ['shared']
+    },
+    settings: {
+      import: './src/settings/index.ts',
+      dependOn: ['shared', 'ui']
+    },
+    popup: {
+      import: './src/popup/index.ts',
+      dependOn: ['shared', 'ui']
+    },
+    shared: {
+      import: ['lodash', 'webextension-polyfill-ts'],
+      runtime: 'runtime'
+    },
+    ui: {
+      import: ['react', 'react-dom',
+        'single-spa', 'single-spa-react',
+        './node_modules/single-spa-react/lib/cjs/single-spa-react.cjs'],
+      runtime: 'runtime'
+    }
   },
   module: {
     rules: [
