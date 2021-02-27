@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   mode: 'development',
@@ -42,11 +43,21 @@ module.exports = {
         }
       },
       {
+        /* Workaround for web-ext warning: 'DANGEROUS_EVAL: The Function constructor is eval.'  */
         test: /lodash\.js$/,
         loader: 'string-replace-loader',
         options: {
           search: /Function\(['"]return this['"]\)\(\)/,
           replace: 'null'
+        }
+      },
+      {
+        /* Workaround for web-ext warning: 'UNSAFE_VAR_ASSIGNMENT: Unsafe assignment to innerHTML'  */
+        test: /react-dom\.development\.js$/,
+        loader: 'string-replace-loader',
+        options: {
+          search: /\.innerHTML\s?=/g,
+          replace: '.innerText='
         }
       }
     ]
@@ -59,6 +70,27 @@ module.exports = {
   plugins: [
     new webpack.ProvidePlugin({
       global: path.resolve(path.join(__dirname, '../src/lib/util/global'))
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Background Application Container',
+      filename: 'background.html',
+      template: 'src/html/background.ejs',
+      inject: 'head',
+      chunks: ['background', 'shared']
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Paranoia Password Manager Configuration',
+      filename: 'settings.html',
+      template: 'src/html/settings.ejs',
+      inject: 'head',
+      chunks: ['settings', 'shared', 'ui']
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Paranoia Password Manager Popup',
+      filename: 'popup.html',
+      template: 'src/html/popup.ejs',
+      inject: 'head',
+      chunks: ['popup', 'shared', 'ui']
     })
   ],
   performance: {

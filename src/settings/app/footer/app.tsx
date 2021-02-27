@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { getTranslatedMessage as t } from '../../../lib/util/I18n'
+import { getProjectConfigValue } from '../../../lib/util/utils'
 
 type componentProps = {
     title: string,
@@ -7,8 +8,7 @@ type componentProps = {
 }
 
 export default class Footer extends Component < componentProps > {
-  // @todo: get the real version number from the package.json file
-  version = 'v0.0.2'
+  version = 'v' + getProjectConfigValue('version')
 
   componentDidCatch (error: Error, errorInfo: React.ErrorInfo) {
     console.error(error)

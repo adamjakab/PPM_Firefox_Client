@@ -2,6 +2,12 @@ import * as _ from 'lodash'
 import { PPMApp } from '../../background/app/PPMApp'
 import { browser } from 'webextension-polyfill-ts'
 
+export const getProjectConfigValue = (path: string, defaultValue: any = undefined) => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const pkgDef = require('../../../package.json')
+  return _.get(pkgDef, path, defaultValue)
+}
+
 /**
  * Returns global variable
  */
