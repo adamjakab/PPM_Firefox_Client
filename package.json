@@ -1,7 +1,7 @@
 {
   "name": "ppm_client_firefox",
   "title": "Paranoia Password Manager",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "PPM extension for firefox",
   "author": "Adam Jakab <adam@jakab.pro>",
   "license": "MIT",
@@ -68,7 +68,6 @@
     "jest-runner-groups": "^2.0.1",
     "madge": "^4.0.0",
     "string-replace-loader": "^3.0.1",
-    "terser-webpack-plugin": "^5.1.1",
     "ts-jest": "^26.5.2",
     "ts-loader": "^8.0.17",
     "typescript": "4.1",

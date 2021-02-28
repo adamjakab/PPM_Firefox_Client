@@ -2,7 +2,11 @@ PPM Firefox Client
 ==================
 Install
 --------
-> npm install --force
+There are some outdated packages such as `grunt-webpack` which require webpack v4.
+However this project needs webpack v5 so npm needs come convincing that this peer
+dependency mismatch is ok:
+
+> npm install npm install --legacy-peer-deps
 
 
 Bumping up the version
