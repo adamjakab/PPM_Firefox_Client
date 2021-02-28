@@ -1,6 +1,7 @@
 import { log } from '../../lib/util/unified.logger'
+import { CryptorInterface } from '../../lib/interface/service.interface'
 
-export class Cryptor {
+export class Cryptor implements CryptorInterface {
   _schemes: any[]
 
   constructor () {

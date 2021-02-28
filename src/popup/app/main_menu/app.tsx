@@ -7,7 +7,7 @@ import { StaticMenu } from './static.menu'
 export default class MainMenu extends Component {
   constructor (props:any) {
     super(props)
-    log('Showing popup...')
+    log('Showing popup.')
   }
 
   componentWillUnmount () {

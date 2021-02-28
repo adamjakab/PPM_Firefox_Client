@@ -1,8 +1,8 @@
 import { LoggerService } from '../logger/logger.service'
-import { log } from '../../lib/util/unified.logger'
 import { ConfigurationProvider } from '../configuration/configuration.provider'
 import { DataProvider } from '../data/data.provider'
 import { Cryptor } from '../cryptor/cryptor'
+import { log } from '../../lib/util/unified.logger'
 import * as _ from 'lodash'
 
 export class PPMApp {
@@ -20,7 +20,7 @@ export class PPMApp {
   }
 
   public run () {
-    log('Initializing.')
+    log('PPMApp initializing...')
     window.addEventListener('PPM', this.PPMCustomEventListener.bind(this) as EventListener, false)
     this._cryptor.initialize().then(() => {
       return this._configurationProvider.initialize()
@@ -68,5 +68,9 @@ export class PPMApp {
 
   get dataProvider (): DataProvider {
     return this._dataProvider
+  }
+
+  get loggerService (): LoggerService {
+    return this._loggerService
   }
 }

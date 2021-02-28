@@ -75,6 +75,7 @@ module.exports = {
       title: 'Background Application Container',
       filename: 'background.html',
       template: 'src/html/background.ejs',
+      cache: true,
       inject: 'head',
       chunks: ['background', 'shared']
     }),
@@ -82,6 +83,7 @@ module.exports = {
       title: 'Paranoia Password Manager Configuration',
       filename: 'settings.html',
       template: 'src/html/settings.ejs',
+      cache: true,
       inject: 'head',
       chunks: ['settings', 'shared', 'ui']
     }),
@@ -89,6 +91,7 @@ module.exports = {
       title: 'Paranoia Password Manager Popup',
       filename: 'popup.html',
       template: 'src/html/popup.ejs',
+      cache: true,
       inject: 'head',
       chunks: ['popup', 'shared', 'ui']
     })

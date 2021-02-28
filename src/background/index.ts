@@ -10,9 +10,9 @@ if (!_.has(window, 'PPMApp')) {
   // Create an instance of the PPMApp
   const app = new PPMApp()
 
-  // Expose PPMApp instance to the world
+  // Expose the PPMApp instance to the world
   _.set(window, 'PPMApp', app)
 
-  // Run the application
+  // Run it
   app.run()
 }

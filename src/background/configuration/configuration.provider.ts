@@ -2,8 +2,9 @@ import { log } from '../../lib/util/unified.logger'
 import { Configuration, ConfigurationData } from './configuration'
 import { browser, Storage } from 'webextension-polyfill-ts'
 import _ from 'lodash'
+import { ConfigurationProviderInterface } from '../../lib/interface/service.interface'
 
-export class ConfigurationProvider {
+export class ConfigurationProvider implements ConfigurationProviderInterface {
   private _config: Configuration
 
   private _currentProfileName: string
@@ -18,7 +19,7 @@ export class ConfigurationProvider {
   public initialize () {
     return new Promise<void>((resolve, reject) => {
       this.ensureAtLeastOneProfile().then(() => {
-        log('Initialized.')
+        log('ConfigurationProvider initialized.')
         resolve()
       })
     })

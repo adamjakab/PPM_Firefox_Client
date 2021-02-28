@@ -3,8 +3,9 @@ import { PasswordList } from '../../lib/model/password.list'
 import { PasswordCard } from '../../lib/model/password.card'
 import { getRandomString } from '../../lib/util/utils'
 import * as _ from 'lodash'
+import { DataProviderInterface } from '../../lib/interface/service.interface'
 
-export class DataProvider {
+export class DataProvider implements DataProviderInterface {
   private readonly _pwdList: PasswordList
 
   constructor () {
@@ -18,8 +19,8 @@ export class DataProvider {
 
   public initialize () {
     return new Promise<void>((resolve, reject) => {
-      this.generateRandomPasscards(8)
-      log('Initialized.')
+      this.generateRandomPasscards(3)
+      log('DataProvider initialized.')
       resolve()
     })
   }

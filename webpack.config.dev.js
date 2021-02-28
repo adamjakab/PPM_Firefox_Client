@@ -8,7 +8,7 @@ module.exports = _.extend(_.cloneDeep(commonConfig), {
     path: path.resolve(__dirname, 'build-dev'),
     filename: 'js/[name].js'
   },
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
   cache: {
     type: 'filesystem',
     cacheDirectory: path.resolve(__dirname, '.cache')

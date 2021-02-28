@@ -1,11 +1,13 @@
-import { getBackgroundPage } from './utils'
+import { getPPMApp } from './utils'
 import _ from 'lodash'
+import { LoggerServiceInterface } from '../interface/service.interface'
 
-// Make sure log events are dispatched in the background window
-let backgroundWindow:Window = window
-getBackgroundPage().then(win => {
-  backgroundWindow = win
-})
+let loggerService:LoggerServiceInterface
+
+const getLoggerService = async () => {
+  const PPMApp = await getPPMApp()
+  loggerService = PPMApp.loggerService
+}
 
 const getCallerFromStack = ():string => {
   let caller = ''
@@ -28,18 +30,16 @@ const getCallerFromStack = ():string => {
 }
 
 export const log = (message?: any, ...optionalParams: any[]) => {
-  const zone = getCallerFromStack()
-  backgroundWindow.dispatchEvent(new CustomEvent('PPM',
-    {
-      detail: {
-        type: 'log.message',
-        value: 'info',
-        zone: zone,
-        message: message,
-        optionalParams: optionalParams
-      },
-      bubbles: true,
-      cancelable: true
-    }
-  ))
+  const _log = (message?: any, ...optionalParams: any[]) => {
+    const zone = getCallerFromStack()
+    loggerService.log(zone, message, ...optionalParams)
+  }
+
+  if (_.isUndefined(loggerService)) {
+    getLoggerService().then(() => {
+      _log(message, ...optionalParams)
+    })
+  } else {
+    _log(message, ...optionalParams)
+  }
 }
