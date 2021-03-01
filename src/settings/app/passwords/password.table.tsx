@@ -1,40 +1,49 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { ModelAwareComponent } from '../../../lib/component/model.aware.component'
 import { PasswordCard } from '../../../lib/model/password.card'
 import { PasswordList } from '../../../lib/model/password.list'
 import { log } from '../../../lib/util/unified.logger'
 import * as _ from 'lodash'
+import { getPPMApp } from '../../../lib/util/utils'
 
 // ------------------------------------------------------------------------------------| Password Table |
-interface PasswordTableComponentState {
-  passwordList: PasswordList,
-}
-// extends ModelAwareComponent <{pwdlist:PasswordList, refresh:any}>
-// extends Component <{pwdlist:PasswordList, refresh:any}> {
-export class PasswordTable extends Component <{pwdlist:PasswordList, refresh:any}> {
-  state: PasswordTableComponentState
+export class PasswordTable extends ModelAwareComponent {
+  _model: PasswordList
 
   constructor (props: any) {
     super(props)
     log('PasswordTable created.')
   }
 
+  componentDidMount () {
+    this.refreshPasswordList().then(() => {
+      log('Password list refreshed')
+    })
+  }
+
+  refreshPasswordList = async () => {
+    const PPMApp = await getPPMApp()
+    const passwordList = await PPMApp.dataProvider.getPasswordList()
+    this.registerModel(passwordList)
+    this.setState({})
+  }
+
   render () {
     let tbody, itemCount
-    if (_.isUndefined(this.props.pwdlist)) {
+    if (_.isUndefined(this._model)) {
       itemCount = 0
       tbody = <tr><td colSpan={3} className={'nodata'}>No data</td></tr>
     } else {
-      itemCount = this.props.pwdlist.getLength()
-      tbody = this.props.pwdlist.items.map((item) => (
+      itemCount = this._model.getLength()
+      tbody = this._model.items.map((item) => (
           <PasswordRow key={item.id} passcard={item} />
       ))
     }
     return (
       <div>
-        <span>Count: {itemCount} </span>
+        <small>Count: {itemCount}</small>
         <br/>
-        <button onClick={this.props.refresh} type="button" className={'btn btn-outline-warning'}>Refresh list</button>
+        <button onClick={this.refreshPasswordList} type="button" className={'btn btn-outline-warning float-right'}>Refresh list</button>
         <table className="password table table-bordered table-striped table-hover">
           <thead className="thead-dark">
           <tr>

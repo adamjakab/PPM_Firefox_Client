@@ -1,14 +1,31 @@
 import * as _ from 'lodash'
 import { Component } from 'react'
 
+export interface ReactComponentLinkedModelInterface {
+  registerReactComponent (component:Component): void
+  unregisterReactComponent (component:Component): void
+  refreshLinkedComponents (): void
+}
 /**
- * Helper class to be able to bind and programmatically update React components related to this model
+ * @class ReactComponentLinkedModel
+ *
+ * Helper class to facilitate the refresh of a related React component when the model changes
  */
-export class ReactComponentLinkedModel {
+export class ReactComponentLinkedModel implements ReactComponentLinkedModelInterface {
   private readonly boundComponents: Component[]
 
   constructor () {
     this.boundComponents = []
+  }
+
+  /**
+   * Call this method to trigger the refresh of all bound react components.
+   */
+  public refreshLinkedComponents () {
+    this.sanitizeBoundComponents()
+    _.each(this.boundComponents, (cmp:Component) => {
+      cmp.setState({})
+    })
   }
 
   public registerReactComponent (component:Component) {
@@ -28,13 +45,6 @@ export class ReactComponentLinkedModel {
   public unregisterReactComponent (component:Component) {
     _.remove(this.boundComponents, cmp => {
       return cmp === component
-    })
-  }
-
-  public refreshLinkedComponents () {
-    this.sanitizeBoundComponents()
-    _.each(this.boundComponents, (cmp:Component) => {
-      cmp.setState({})
     })
   }
 

@@ -10,17 +10,20 @@ export class PasswordCard extends Card {
     if (data) {
       this._text = data.text
     }
-
-    setInterval(this.increaseCounter, 500)
+    setInterval(this.increaseCounter, 1000)
   }
 
   protected increaseCounter = () => {
     this._counter++
-    this._text = 'CNT____' + this._counter
-    this.refreshLinkedComponents()
+    this.text = 'CNT___' + this._counter
   }
 
   get text (): string {
     return this._text
+  }
+
+  set text (value: string) {
+    this._text = value
+    this.refreshLinkedComponents()
   }
 }
