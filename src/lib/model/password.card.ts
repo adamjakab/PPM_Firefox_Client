@@ -17,7 +17,6 @@ export class PasswordCard extends Card {
   protected increaseCounter = () => {
     this._counter++
     this._text = 'CNT____' + this._counter
-
     this.refreshLinkedComponents()
   }
 

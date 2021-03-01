@@ -4,27 +4,28 @@ import { PasswordTable } from './password.table'
 import { getPPMApp } from '../../../lib/util/utils'
 import { PasswordList } from '../../../lib/model/password.list'
 import { getTranslatedMessage as t } from '../../../lib/util/I18n'
+import { ModelAwareComponent } from '../../../lib/component/model.aware.component'
 // import * as _ from 'lodash'
 
 interface componentState {
   passwordList: PasswordList
 }
 
-export default class PasswordsApp extends Component {
+export default class PasswordsApp extends ModelAwareComponent {
   state: componentState
+  _model: PasswordList
 
   constructor (props: any) {
     super(props)
-    this.state = {
-      passwordList: new PasswordList()
-    }
     log('Created.')
   }
 
   refreshPasswordList = async () => {
     const PPMApp = await getPPMApp()
     const pwl = await PPMApp.dataProvider.getPasswordList()
-    this.state.passwordList.resetWithPasswordList(pwl)
+    // this.state.passwordList.resetWithPasswordList(pwl)
+    // this._model.resetWithPasswordList(pwl)
+    this.registerModel(pwl)
     this.setState({})
   }
 
@@ -45,7 +46,7 @@ export default class PasswordsApp extends Component {
                 <h1>{t('title_passwords')}</h1>
             </div>
             <div className="main table-responsive">
-              <PasswordTable pwdlist={this.state.passwordList} refresh={this.refreshPasswordList}/>
+              <PasswordTable pwdlist={this._model} refresh={this.refreshPasswordList}/>
             </div>
         </main>
     )

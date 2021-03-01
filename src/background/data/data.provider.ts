@@ -10,16 +10,13 @@ export class DataProvider implements DataProviderInterface {
 
   constructor () {
     this._pwdList = new PasswordList()
-    /*
-    setInterval(() => {
-      this.generateRandomPasscards(1)
-    }, 5000)
-     */
   }
 
   public initialize () {
     return new Promise<void>((resolve, reject) => {
-      this.generateRandomPasscards(3)
+      setInterval(() => {
+        this.modifyPasswordList()
+      }, 5000)
       log('DataProvider initialized.')
       resolve()
     })
@@ -33,16 +30,30 @@ export class DataProvider implements DataProviderInterface {
     })
   }
 
-  protected generateRandomPasscards (length:number) {
-    _.each(_.range(0, length), i => {
-      this._pwdList.addItem(this.getRandomPasscards())
-    })
+  protected modifyPasswordList () {
+    const pwListLen = this._pwdList.getLength()
+    const operations = ['add', 'remove']
+    let operation = _.nth(operations, Math.floor(Math.random() * operations.length))
+    if (pwListLen < 3) {
+      operation = 'add'
+    }
+    if (pwListLen === 10) {
+      operation = 'remove'
+    }
+    if (operation === 'add') {
+      log('Add item to pwList(' + pwListLen + ')')
+      this._pwdList.addItem(this.getRandomPasscard())
+    }
+    if (operation === 'remove') {
+      const pos = Math.floor(Math.random() * pwListLen)
+      log('Remove item from pwList(' + pwListLen + ') at: ' + pos)
+      this._pwdList.removeItemAt(pos)
+    }
   }
 
-  protected getRandomPasscards = () => {
-    const index = this._pwdList.getLength()
+  protected getRandomPasscard = () => {
     return new PasswordCard({
-      id: index + '___' + getRandomString(8),
+      id: getRandomString(12),
       name: getRandomString(32),
       text: '',
       dateCreated: new Date(),

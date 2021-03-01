@@ -1,10 +1,12 @@
+import { ReactComponentLinkedModel } from './react.component.linked.model'
 import { PasswordCard } from './password.card'
 import * as _ from 'lodash'
 
-export class PasswordList {
+export class PasswordList extends ReactComponentLinkedModel {
   private _items: PasswordCard[]
 
   constructor () {
+    super()
     this._items = []
   }
 
@@ -35,6 +37,17 @@ export class PasswordList {
     }
 
     this._items.push(item)
+    this.refreshLinkedComponents()
+  }
+
+  /**
+   * Remove an item at a specific position
+   */
+  public removeItemAt (index: number): void {
+    index = index >= 0 ? index : 0
+    index = index < this.getLength() ? index : this.getLength() - 1
+    this._items.splice(index, 1)
+    this.refreshLinkedComponents()
   }
 
   /**
