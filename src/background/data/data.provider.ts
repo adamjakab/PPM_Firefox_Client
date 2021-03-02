@@ -41,13 +41,10 @@ export class DataProvider implements DataProviderInterface {
       operation = 'remove'
     }
     if (operation === 'add') {
-      log('Add item to pwList(' + pwListLen + ')')
       this._pwdList.addItem(this.getRandomPasscard())
     }
     if (operation === 'remove') {
-      const pos = Math.floor(Math.random() * pwListLen)
-      log('Remove item from pwList(' + pwListLen + ') at: ' + pos)
-      this._pwdList.removeItemAt(pos)
+      this._pwdList.removeItemAt(0)
     }
   }
 

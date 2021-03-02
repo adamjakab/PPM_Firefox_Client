@@ -10,7 +10,7 @@ export class LoggerService implements LoggerServiceInterface {
   }
 
   /**
-   * Load the relative configuration as soon it is available by the configurationProvider
+   * Get the relative configuration as soon it is available by the configurationProvider
    */
   protected PPMCustomEventListener (e: CustomEvent<{ type: string, value: string, zone: string, message: string, optionalParams: [] }>) {
     if (e && e.type === 'PPM') {
@@ -25,14 +25,10 @@ export class LoggerService implements LoggerServiceInterface {
     }
   }
 
-  public log (zone: string, message: any, ...optionalParams: any[]) {
+  public log (message: any, ...optionalParams: any[]) {
     if (this._doConsoleLogging) {
-      const prefix = zone + ': '
-      if (optionalParams.length && optionalParams[0].length) {
-        console.log(prefix + message, optionalParams)
-      } else {
-        console.log(prefix + message)
-      }
+      const prefix = ''
+      console.log(prefix + message, ...optionalParams)
     }
   }
 }
