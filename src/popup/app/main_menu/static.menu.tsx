@@ -1,11 +1,9 @@
 import { log } from '../../../lib/util/unified.logger'
 import React, { Component, SyntheticEvent } from 'react'
-import { getTranslatedMessage as t } from '../../../lib/util/I18n'
 import { browser } from 'webextension-polyfill-ts'
-import _ from 'lodash'
 
 export class StaticMenu extends Component {
-  openConfigurationsTab = (e:SyntheticEvent) => {
+  openConfigurationsTab = (e: SyntheticEvent) => {
     e.preventDefault()
     browser.tabs.create({ url: 'settings.html' }).then(() => {
       log('Settings opened')

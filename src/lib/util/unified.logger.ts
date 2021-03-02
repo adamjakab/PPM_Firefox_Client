@@ -2,14 +2,14 @@ import { getPPMApp } from './utils'
 import _ from 'lodash'
 import { LoggerServiceInterface } from '../interface/service.interface'
 
-let loggerService:LoggerServiceInterface
+let loggerService: LoggerServiceInterface
 
 const getLoggerService = async () => {
   const PPMApp = await getPPMApp()
   loggerService = PPMApp.loggerService
 }
 
-const getCallerFromStack = ():string => {
+const getCallerFromStack = (): string => {
   let caller = ''
   const stack = new Error('I was called').stack
   if (stack) {

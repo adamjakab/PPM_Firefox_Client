@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { getTranslatedMessage as t } from '../../../lib/util/I18n'
 
 export class DynamicMenu extends Component {
   render () {

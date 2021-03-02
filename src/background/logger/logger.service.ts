@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { getPPMApp } from '../../lib/util/utils'
 import { LoggerServiceInterface } from '../../lib/interface/service.interface'
 
@@ -13,7 +12,7 @@ export class LoggerService implements LoggerServiceInterface {
   /**
    * Load the relative configuration as soon it is available by the configurationProvider
    */
-  protected PPMCustomEventListener (e: CustomEvent<{type:string, value:string, zone:string, message:string, optionalParams:[]}>) {
+  protected PPMCustomEventListener (e: CustomEvent<{ type: string, value: string, zone: string, message: string, optionalParams: [] }>) {
     if (e && e.type === 'PPM') {
       if (e.detail.type === 'config.state' && e.detail.value === 'loaded') {
         getPPMApp().then((PPMApp) => {
@@ -26,7 +25,7 @@ export class LoggerService implements LoggerServiceInterface {
     }
   }
 
-  public log (zone:string, message: any, ...optionalParams: any[]) {
+  public log (zone: string, message: any, ...optionalParams: any[]) {
     if (this._doConsoleLogging) {
       const prefix = zone + ': '
       if (optionalParams.length && optionalParams[0].length) {

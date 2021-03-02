@@ -1,6 +1,6 @@
 import { log } from '../../lib/util/unified.logger'
 import { Configuration, ConfigurationData } from './configuration'
-import { browser, Storage } from 'webextension-polyfill-ts'
+import { browser } from 'webextension-polyfill-ts'
 import _ from 'lodash'
 import { ConfigurationProviderInterface } from '../../lib/interface/service.interface'
 
@@ -25,7 +25,7 @@ export class ConfigurationProvider implements ConfigurationProviderInterface {
     })
   }
 
-  public async loadProfile (profileName:string, encryptionKey:string, encryptionSchemeName:string):Promise<void> {
+  public async loadProfile (profileName: string, encryptionKey: string, encryptionSchemeName: string): Promise<void> {
     const profiles = await this.getAvailableProfileNames()
     if (!_.includes(profiles, profileName)) {
       throw new Error('Requested profile(' + profileName + ') is not available. Profiles: ' + JSON.stringify(profiles))
@@ -43,7 +43,7 @@ export class ConfigurationProvider implements ConfigurationProviderInterface {
     ))
   }
 
-  public async resetConfiguration (configData:ConfigurationData) {
+  public async resetConfiguration (configData: ConfigurationData) {
     // encrypt here...
     const encryptedProfileData = configData
     await this.writeToStorage(this._currentProfileName, encryptedProfileData)
@@ -78,7 +78,7 @@ export class ConfigurationProvider implements ConfigurationProviderInterface {
     })
   }
 
-  protected async writeToStorage (profile:string, value:any) {
+  protected async writeToStorage (profile: string, value: any) {
     return new Promise<void>((resolve, reject) => {
       const storage = this.getStorage()
       const data = _.set({}, profile, value)
@@ -92,7 +92,7 @@ export class ConfigurationProvider implements ConfigurationProviderInterface {
     })
   }
 
-  protected async readFromStorage (profile:null | string) {
+  protected async readFromStorage (profile: null | string) {
     return new Promise<any>((resolve, reject) => {
       const storage = this.getStorage()
       storage.get(profile).then(data => {

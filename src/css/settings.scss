@@ -4,48 +4,48 @@
 @import "./_variables";
 
 body {
-    padding-top: 56px;
+  padding-top: 56px;
 }
 
-section#navigation
-{
+section#navigation {
 
 }
 
-section#content
-{
-    main.app{
-        .head {
-            padding: 1rem 1rem;
-            text-align: center;
+section#content {
+  main.app {
+    .head {
+      padding: 1rem 1rem;
+      text-align: center;
+    }
+
+    .main {
+      text-align: center;
+
+      .password.table {
+        td.nodata {
+          text-align: center;
         }
 
-        .main {
-            text-align: center;
-
-            .password.table {
-                td.nodata {
-                    text-align: center;
-                }
-                th.id {
-                    width: 10%;
-                }
-                th.name {
-                    width: auto;
-                }
-                th.text {
-                    width: 15%;
-                }
-            }
+        th.id {
+          width: 10%;
         }
+
+        th.name {
+          width: auto;
+        }
+
+        th.text {
+          width: 15%;
+        }
+      }
     }
+  }
 }
 
-section#footer
-{
-    footer.footer {
-        background: $gray-300;
-        text-align: center;
-        font-size: small;
-    }
+section#footer {
+  footer.footer {
+    background: $gray-300;
+    text-align: center;
+    font-size: small;
+  }
 }

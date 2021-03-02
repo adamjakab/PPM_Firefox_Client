@@ -16,14 +16,14 @@ export default class PasswordsApp extends Component {
 
   render () {
     return (
-        <main role="main" className="container-fluid app passwords">
-            <div className="head">
-                <h1>{t('title_passwords')}</h1>
-            </div>
-            <div className="main table-responsive">
-              <PasswordTable />
-            </div>
-        </main>
+      <main role="main" className="container-fluid app passwords">
+        <div className="head">
+          <h1>{t('title_passwords')}</h1>
+        </div>
+        <div className="main table-responsive">
+          <PasswordTable/>
+        </div>
+      </main>
     )
   }
 }

@@ -8,7 +8,7 @@ import _ from 'lodash'
 export default class Settings extends Component {
   state: ConfigurationData
 
-  constructor (props:any) {
+  constructor (props: any) {
     super(props)
 
     const cfg = new Configuration()
@@ -28,8 +28,8 @@ export default class Settings extends Component {
     })
   }
 
-  handleChange (event:SyntheticEvent) {
-    const target:any = event.target
+  handleChange (event: SyntheticEvent) {
+    const target: any = event.target
     const stateClone = _.clone(this.state)
     switch (target.id) {
       case 'log_to_console':
@@ -47,7 +47,7 @@ export default class Settings extends Component {
     }
   }
 
-  async handleSubmit (event:SyntheticEvent) {
+  async handleSubmit (event: SyntheticEvent) {
     event.preventDefault()
     log('Updating configuration with: ', this.state)
     getPPMApp().then((PPMApp) => {
@@ -72,7 +72,7 @@ export default class Settings extends Component {
           <div className="form-group">
             <label htmlFor="test_element">Test Element</label>
             <input type="text" value={this.state.logger.test_element} className="form-control" id="test_element"
-                   aria-describedby="testHelp" placeholder="Write something" onChange={this.handleChange} />
+                   aria-describedby="testHelp" placeholder="Write something" onChange={this.handleChange}/>
             <small id="testHelp" className="form-text text-muted">This will become very secret.</small>
           </div>
           <button type="submit" className="btn btn-primary mb-2">Save</button>

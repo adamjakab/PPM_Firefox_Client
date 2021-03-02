@@ -10,7 +10,7 @@ import { ReactComponentLinkedModelInterface } from '../model/react.component.lin
 export class ModelAwareComponent<P = any, S = any> extends Component<P, S> {
   protected _model: ReactComponentLinkedModelInterface
 
-  protected registerModel (model:ReactComponentLinkedModelInterface) {
+  protected registerModel (model: ReactComponentLinkedModelInterface) {
     this._model = model
     this._model.registerReactComponent(this)
   }

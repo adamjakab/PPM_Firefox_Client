@@ -8,7 +8,7 @@ import * as _ from 'lodash'
  * @param key
  * @param substitutions
  */
-export const getTranslatedMessage = (key:string, substitutions?:any):string => {
+export const getTranslatedMessage = (key: string, substitutions?: any): string => {
   let translated = browser.i18n.getMessage(key, substitutions)
   if (_.isEmpty(translated)) {
     console.log('I18n - Missing translation required: ' + key)

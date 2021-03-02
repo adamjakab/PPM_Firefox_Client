@@ -1,11 +1,10 @@
 import { log } from '../../../lib/util/unified.logger'
 import React, { Component } from 'react'
-import { getTranslatedMessage as t } from '../../../lib/util/I18n'
 import { DynamicMenu } from './dynamic.menu'
 import { StaticMenu } from './static.menu'
 
 export default class MainMenu extends Component {
-  constructor (props:any) {
+  constructor (props: any) {
     super(props)
     log('Showing popup.')
   }
@@ -21,9 +20,9 @@ export default class MainMenu extends Component {
   render () {
     return (
       <div className="main_menu">
-        <DynamicMenu />
-        <hr />
-        <StaticMenu />
+        <DynamicMenu/>
+        <hr/>
+        <StaticMenu/>
       </div>
     )
   }

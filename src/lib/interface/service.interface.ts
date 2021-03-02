@@ -5,19 +5,21 @@ import { PasswordList } from '../model/password.list'
  */
 
 export interface LoggerServiceInterface {
-  log(zone?:string, message?: any, ...optionalParams: any[]): void
+  log (zone?: string, message?: any, ...optionalParams: any[]): void
 }
 
 export interface DataProviderInterface {
-  initialize(): Promise<void>
-  getPasswordList() : Promise<PasswordList>
+  initialize (): Promise<void>
+
+  getPasswordList (): Promise<PasswordList>
 }
 
 export interface ConfigurationProviderInterface {
-  initialize(): Promise<void>
-  loadProfile(profileName:string, encryptionKey:string, encryptionSchemeName:string): Promise<void>
+  initialize (): Promise<void>
+
+  loadProfile (profileName: string, encryptionKey: string, encryptionSchemeName: string): Promise<void>
 }
 
 export interface CryptorInterface {
-  initialize(): Promise<void>
+  initialize (): Promise<void>
 }

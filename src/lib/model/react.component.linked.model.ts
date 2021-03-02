@@ -2,10 +2,13 @@ import * as _ from 'lodash'
 import { Component } from 'react'
 
 export interface ReactComponentLinkedModelInterface {
-  registerReactComponent (component:Component): void
-  unregisterReactComponent (component:Component): void
+  registerReactComponent (component: Component): void
+
+  unregisterReactComponent (component: Component): void
+
   refreshLinkedComponents (): void
 }
+
 /**
  * @class ReactComponentLinkedModel
  *
@@ -23,12 +26,12 @@ export class ReactComponentLinkedModel implements ReactComponentLinkedModelInter
    */
   public refreshLinkedComponents () {
     this.sanitizeBoundComponents()
-    _.each(this.boundComponents, (cmp:Component) => {
+    _.each(this.boundComponents, (cmp: Component) => {
       cmp.setState({})
     })
   }
 
-  public registerReactComponent (component:Component) {
+  public registerReactComponent (component: Component) {
     let found = false
     _.each(this.boundComponents, cmp => {
       if (cmp === component) {
@@ -42,7 +45,7 @@ export class ReactComponentLinkedModel implements ReactComponentLinkedModelInter
     }
   }
 
-  public unregisterReactComponent (component:Component) {
+  public unregisterReactComponent (component: Component) {
     _.remove(this.boundComponents, cmp => {
       return cmp === component
     })

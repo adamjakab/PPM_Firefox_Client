@@ -32,18 +32,22 @@ export class PasswordTable extends ModelAwareComponent {
     let tbody, itemCount
     if (_.isUndefined(this._model)) {
       itemCount = 0
-      tbody = <tr><td colSpan={3} className={'nodata'}>No data</td></tr>
+      tbody = <tr>
+        <td colSpan={3} className={'nodata'}>No data</td>
+      </tr>
     } else {
       itemCount = this._model.getLength()
       tbody = this._model.items.map((item) => (
-          <PasswordRow key={item.id} passcard={item} />
+        <PasswordRow key={item.id} passcard={item}/>
       ))
     }
     return (
       <div>
         <small>Count: {itemCount}</small>
         <br/>
-        <button onClick={this.refreshPasswordList} type="button" className={'btn btn-outline-warning float-right'}>Refresh list</button>
+        <button onClick={this.refreshPasswordList} type="button"
+                className={'btn btn-outline-warning float-right'}>Refresh list
+        </button>
         <table className="password table table-bordered table-striped table-hover">
           <thead className="thead-dark">
           <tr>
@@ -53,7 +57,7 @@ export class PasswordTable extends ModelAwareComponent {
           </tr>
           </thead>
           <tbody>
-            {tbody}
+          {tbody}
           </tbody>
         </table>
       </div>
@@ -62,7 +66,7 @@ export class PasswordTable extends ModelAwareComponent {
 }
 
 // ------------------------------------------------------------------------------------| Password Row |
-class PasswordRow extends ModelAwareComponent <{passcard:PasswordCard}> {
+class PasswordRow extends ModelAwareComponent <{ passcard: PasswordCard }> {
   _model: PasswordCard
 
   constructor (props: any) {

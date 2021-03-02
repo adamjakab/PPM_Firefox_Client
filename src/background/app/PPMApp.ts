@@ -3,11 +3,10 @@ import { ConfigurationProvider } from '../configuration/configuration.provider'
 import { DataProvider } from '../data/data.provider'
 import { Cryptor } from '../cryptor/cryptor'
 import { log } from '../../lib/util/unified.logger'
-import * as _ from 'lodash'
 
 export class PPMApp {
   private readonly ___DO_AUTOLOGIN___ = true
-  private readonly _loggerService:LoggerService
+  private readonly _loggerService: LoggerService
   private readonly _cryptor: Cryptor
   private readonly _configurationProvider: ConfigurationProvider
   private readonly _dataProvider: DataProvider
@@ -41,7 +40,7 @@ export class PPMApp {
     })
   }
 
-  protected PPMCustomEventListener (e: CustomEvent<{type:string, value:string}>) {
+  protected PPMCustomEventListener (e: CustomEvent<{ type: string, value: string }>) {
     if (e && e.type === 'PPM') {
       switch (e.detail.type) {
         case 'app.state':

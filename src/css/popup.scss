@@ -9,15 +9,16 @@ body {
   width: 100%;
 }
 
-section#header
-{
-  .header{
+section#header {
+  .header {
     border-bottom: 1px solid $gray-800;
-    img.logo{
+
+    img.logo {
       display: block;
-      margin:0 auto
+      margin: 0 auto
     }
-    h1{
+
+    h1 {
       font-size: 1rem;
       text-align: center;
     }
@@ -25,7 +26,6 @@ section#header
 
 }
 
-section#content
-{
-  width:250px;
+section#content {
+  width: 250px;
 }

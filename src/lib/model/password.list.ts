@@ -14,7 +14,7 @@ export class PasswordList extends ReactComponentLinkedModel {
     return this._items
   }
 
-  public getLength ():number {
+  public getLength (): number {
     return this._items.length
   }
 
@@ -57,7 +57,7 @@ export class PasswordList extends ReactComponentLinkedModel {
     return false
   }
 
-  public resetWithPasswordList (lst:PasswordList) {
+  public resetWithPasswordList (lst: PasswordList) {
     this._items = []
     _.each(lst.items, pwd => {
       this._items.push(pwd)
